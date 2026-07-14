@@ -1,0 +1,243 @@
+<include src="layout.html">
+  <template name="head">
+    <title th:text="|${post.spec.title} - ${site.title}|">文章标题</title>
+    <link rel="stylesheet" href="./css/post.css" />
+    <script type="module" src="./js/post.ts"></script>
+  </template>
+
+  <div class="post-layout sidebar-left">
+    <!-- Sidebar -->
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="sidebar.html"></include>
+    </th:block>
+
+    <!-- Floating Action Bar -->
+    <aside class="post-actions" id="postActions">
+      <!-- 阅读进度条（横条上方彩色细条） -->
+      <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+    </aside>
+
+    <!-- Floating Back to Top Button -->
+    <button
+      class="floating-backtop"
+      id="backtopBtn"
+      data-i18n-title="post.back_to_top"
+      title="回到顶部"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="19" x2="12" y2="5" />
+        <polyline points="5 12 12 5 19 12" />
+      </svg>
+    </button>
+
+    <div class="content-area">
+      <article
+        class="article-detail"
+        th:with="builtinCover = @{/assets/images/default_post_cover.png}, coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
+      >
+        <!-- Cover -->
+        <div class="article-detail-cover" th:if="${coverUrl != null}">
+          <img th:src="${coverUrl}" alt="" />
+        </div>
+
+        <!-- Header -->
+        <header class="article-detail-header">
+          <h1 class="article-detail-title" th:text="${post.spec.title}"></h1>
+          <div class="article-detail-meta">
+            <span class="meta-item" th:if="${post.owner}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span th:text="${post.owner?.displayName}"></span>
+            </span>
+            <span class="meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              <time
+                th:text="${post.spec.publishTime != null ? #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') : ''}"
+              ></time>
+            </span>
+            <span class="meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span th:text="${post.stats?.visit ?: 0}" data-i18n-suffix="post.reading"></span>
+            </span>
+            <span class="meta-item" id="postWordCount" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="8" y1="13" x2="16" y2="13" />
+                <line x1="8" y1="17" x2="16" y2="17" />
+              </svg>
+              <span class="word-count-text"></span>
+            </span>
+            <span class="meta-item" id="postReadTime" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span class="read-time-text"></span>
+            </span>
+            <span class="meta-item" th:if="${post.stats?.comment}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              <span th:text="${post.stats?.comment ?: 0}" data-i18n-suffix="post.comments"></span>
+            </span>
+            <span class="meta-item" th:if="${not #lists.isEmpty(post.categories)}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                />
+              </svg>
+              <a
+                th:each="cat : ${post.categories}"
+                th:href="@{${cat.status.permalink}}"
+                th:text="${cat.spec.displayName}"
+                style="color: inherit; margin-right: 4px"
+              ></a>
+            </span>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <div class="prose" th:utext="${post.content.content}"></div>
+
+        <!-- Footer -->
+        <footer class="article-footer">
+          <!-- Tags -->
+          <div class="article-tags-row" th:if="${not #lists.isEmpty(post.tags)}">
+            <a
+              th:each="tag : ${post.tags}"
+              th:href="@{${tag.status.permalink}}"
+              th:text="${tag.spec.displayName}"
+              class="tag"
+            ></a>
+          </div>
+
+          <!-- Post Actions -->
+          <div
+            class="post-actions-bar"
+            th:with="upvoteCount = ${post.stats?.upvote ?: 0}, commentCount = ${post.stats?.comment ?: 0}"
+          >
+            <button
+              class="post-action-btn action-upvote"
+              id="upvoteBtn"
+              th:attr="data-post=${post.metadata.name}"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 10v12" />
+                <path
+                  d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"
+                />
+              </svg>
+              <span class="action-count" id="upvoteCount" th:text="${upvoteCount}"></span>
+            </button>
+            <button class="post-action-btn action-comment" id="commentBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              <span class="action-count" th:text="${commentCount}"></span>
+            </button>
+            <button class="post-action-btn action-share" id="shareBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+            </button>
+            <div
+              class="action-share-menu"
+              id="shareMenu"
+              th:attr="data-excerpt=${post.status.excerpt ?: ''}"
+            >
+              <button class="share-item" data-share="qzone" data-i18n-title="share.qzone">
+                <img src="./assets/icons/qqkongjian.svg" alt="QQ空间" />
+                <span data-i18n="share.qzone">QQ空间</span>
+              </button>
+              <button class="share-item" data-share="wechat" data-i18n-title="share.wechat">
+                <img src="./assets/icons/wechat.svg" alt="微信" />
+                <span data-i18n="share.wechat">微信</span>
+              </button>
+              <button class="share-item" data-share="weibo" data-i18n-title="share.weibo">
+                <img src="./assets/icons/webo.svg" alt="微博" />
+                <span data-i18n="share.weibo">微博</span>
+              </button>
+              <button class="share-item" data-share="copy" data-i18n-title="share.copy_link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <span data-i18n="share.copy_link">复制链接</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Prev/Next Navigation -->
+          <div class="post-nav" th:with="cursor = ${postFinder.cursor(post.metadata.name)}">
+            <a
+              class="post-nav-item"
+              th:if="${cursor.hasPrevious()}"
+              th:href="@{${cursor.previous.status.permalink}}"
+            >
+              <span class="post-nav-label">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  style="width: 12px; height: 12px; display: inline; vertical-align: middle"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+                <span data-i18n="post.prev">上一篇</span>
+              </span>
+              <span class="post-nav-title" th:text="${cursor.previous.spec.title}"></span>
+            </a>
+            <span class="post-nav-item" th:unless="${cursor.hasPrevious()}" style="opacity: 0.4">
+              <span class="post-nav-label" data-i18n="post.prev">上一篇</span>
+              <span class="post-nav-title" data-i18n="post.no_more">没有了</span>
+            </span>
+            <a
+              class="post-nav-item next"
+              th:if="${cursor.hasNext()}"
+              th:href="@{${cursor.next.status.permalink}}"
+            >
+              <span class="post-nav-label">
+                <span data-i18n="post.next">下一篇</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  style="width: 12px; height: 12px; display: inline; vertical-align: middle"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+              <span class="post-nav-title" th:text="${cursor.next.spec.title}"></span>
+            </a>
+            <span class="post-nav-item next" th:unless="${cursor.hasNext()}" style="opacity: 0.4">
+              <span class="post-nav-label" data-i18n="post.next">下一篇</span>
+              <span class="post-nav-title" data-i18n="post.no_more">没有了</span>
+            </span>
+          </div>
+        </footer>
+      </article>
+
+      <!-- Comments -->
+      <div th:if="${haloCommentEnabled}" style="margin-top: 24px">
+        <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
+      </div>
+    </div>
+  </div>
+</include>

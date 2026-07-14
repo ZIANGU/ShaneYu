@@ -1,0 +1,72 @@
+<include src="partials/layout.html">
+  <template name="head">
+    <title th:text="|文字花园 - ${site.title}|">文字花园</title>
+    <link rel="stylesheet" href="./css/category.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="partials/sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+              />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" data-i18n="categories.title">文字花园</h1>
+            <p class="page-desc">漫步于主题之间，采撷每一朵思想的花</p>
+          </div>
+          <div class="page-header-stats">
+            <div class="stat-item">
+              <span class="stat-value" th:text="${#lists.size(categories)}"></span>
+              <span class="stat-label" data-i18n="nav.categories">分类</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-list" th:if="${not #lists.isEmpty(categories)}">
+        <div th:each="cat : ${categories}" class="category-item">
+          <a th:href="@{${cat.status.permalink}}" class="category-item-link">
+            <div class="category-item-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                />
+              </svg>
+            </div>
+            <div class="category-item-info">
+              <div class="category-item-name" th:text="${cat.spec.displayName}"></div>
+              <div
+                class="category-item-desc"
+                th:if="${cat.spec.description}"
+                th:text="${cat.spec.description}"
+              ></div>
+            </div>
+            <div class="category-item-count">
+              <span th:text="${cat.postCount}"></span>
+              <span data-i18n="category.articles">篇文章</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(categories)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+        </svg>
+        <p data-i18n="categories.empty">暂无分类</p>
+      </div>
+    </div>
+  </div>
+</include>

@@ -1,0 +1,235 @@
+<aside class="sidebar" th:fragment="sidebar">
+  <div class="widget widget-author" th:if="${theme.config?.sidebar?.show_author != false}">
+    <div class="author-profile">
+      <div class="author-avatar">
+        <img
+          th:src="${theme.config?.social?.author_avatar != null and !#strings.isEmpty(theme.config?.social?.author_avatar) ? theme.config?.social?.author_avatar : '/themes/theme-ShaneYu/assets/images/avatar.png'}"
+          alt="avatar"
+          class="author-avatar-img"
+        />
+      </div>
+      <h3 class="author-name" th:text="${theme.config?.social?.author_name ?: site.title}"></h3>
+      <p
+        class="author-bio"
+        th:if="${theme.config?.social?.author_bio != null and !#strings.isEmpty(theme.config?.social?.author_bio)}"
+        th:text="${theme.config?.social?.author_bio}"
+      ></p>
+      <div class="author-divider"></div>
+
+      <div class="author-stats">
+        <a class="author-stat" th:href="@{${site.routes.archivesUri}}">
+          <span class="author-stat-num" th:text="${postFinder.list({page: 1, size: 1}).total}"
+            >0</span
+          >
+          <span class="author-stat-label" data-i18n="nav.archives">文章</span>
+        </a>
+        <a class="author-stat" th:href="@{${site.routes.categoriesUri}}">
+          <span class="author-stat-num" th:text="${categoryFinder.list(1, 1).total}">0</span>
+          <span class="author-stat-label" data-i18n="nav.categories">分类</span>
+        </a>
+        <a class="author-stat" th:href="@{${site.routes.tagsUri}}">
+          <span class="author-stat-num" th:text="${tagFinder.list(1, 1).total}">0</span>
+          <span class="author-stat-label" data-i18n="nav.tags">标签</span>
+        </a>
+      </div>
+      <div class="author-meta">
+        <th:block th:each="link : ${theme.config?.social?.links}">
+          <a
+            th:if="${link.url != null and !#strings.isEmpty(link.url)}"
+            th:href="${link.icon == 'email' ? 'mailto:' + link.url : link.url}"
+            th:target="${link.icon != 'email' ? '_blank' : ''}"
+            class="author-link"
+            th:aria-label="${link.name}"
+          >
+            <iconify-icon
+              th:if="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:icon="${link.iconifyIcon}"
+              class="author-link-icon"
+            ></iconify-icon>
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'github'}"
+              src="./assets/icons/github.svg"
+              alt="GitHub"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'gitee'}"
+              src="./assets/icons/gitee.svg"
+              alt="Gitee"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'email'}"
+              src="./assets/icons/email.svg"
+              alt="Email"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'weibo'}"
+              src="./assets/icons/weibo.ico"
+              alt="Weibo"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'qq'}"
+              src="./assets/icons/qq.svg"
+              alt="QQ"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'csdn'}"
+              src="./assets/icons/csdn.svg"
+              alt="CSDN"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'youtube'}"
+              src="./assets/icons/youtube.svg"
+              alt="YouTube"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'wechat'}"
+              src="./assets/icons/wechat.svg"
+              alt="Wechat"
+              class="author-link-icon"
+            />
+          </a>
+        </th:block>
+      </div>
+    </div>
+  </div>
+  <div class="widget widget-toc" id="sidebarToc" style="display: none">
+    <div class="widget-title">
+      <span class="title-text" data-i18n="post.toc">目录</span>
+    </div>
+    <div class="toc-widget">
+      <nav class="toc-nav" id="sidebarTocNav"></nav>
+    </div>
+  </div>
+
+  <div class="widget widget-tag-cloud" th:if="${theme.config?.sidebar?.show_tag_cloud != false}">
+    <div class="widget-title">
+      <span class="title-text" data-i18n="sidebar.tag_cloud">思想碎片</span>
+      <a class="widget-link" th:href="@{${site.routes.tagsUri}}"
+        ><span data-i18n="sidebar.view_all">查看全部</span
+        ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6" /></svg
+      ></a>
+    </div>
+    <div class="tag-cloud-body">
+      <a
+        th:each="tag : ${tagFinder.list(1, theme.config?.sidebar?.tag_cloud_count ?: 20).items}"
+        th:href="@{${tag.status.permalink}}"
+        th:text="${tag.spec.displayName}"
+        class="tag-cloud-item"
+      ></a>
+    </div>
+  </div>
+
+  <div class="widget widget-wechat-qr" th:if="${theme.config?.sidebar?.show_wechat_qr}">
+    <div class="widget-title">
+      <span class="title-text">公众号</span>
+    </div>
+    <div class="wechat-qr-body">
+      <div class="wechat-qr-img-wrap">
+        <img
+          th:if="${theme.config?.sidebar?.wechat_qr_image != null and !#strings.isEmpty(theme.config?.sidebar?.wechat_qr_image)}"
+          th:src="${theme.config?.sidebar?.wechat_qr_image}"
+          alt="公众号二维码"
+          class="wechat-qr-img"
+        />
+      </div>
+      <div class="wechat-qr-info">
+        <span
+          class="wechat-qr-title"
+          th:text="${!#strings.isEmpty(theme.config?.sidebar?.wechat_qr_title) ? theme.config?.sidebar?.wechat_qr_title : '扫码关注'}"
+        ></span>
+        <p class="wechat-qr-desc">期待你的关注！</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget widget-categories" th:if="${theme.config?.sidebar?.show_categories != false}">
+    <div class="widget-title">
+      <span class="title-text" data-i18n="categories.title">文字花园</span>
+      <a class="widget-link" th:href="@{${site.routes.categoriesUri}}"
+        ><span data-i18n="sidebar.view_all">查看全部</span
+        ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6" /></svg
+      ></a>
+    </div>
+    <div class="sidebar-category-list">
+      <a
+        th:each="cat : ${categoryFinder.list(1, theme.config?.sidebar?.categories_count ?: 6).items}"
+        th:href="@{${cat.status.permalink}}"
+        class="sidebar-category-item"
+      >
+        <div class="sidebar-category-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+          </svg>
+        </div>
+        <div class="sidebar-category-info">
+          <span class="sidebar-category-name" th:text="${cat.spec.displayName}"></span>
+          <span
+            class="sidebar-category-count"
+            th:text="${cat.postCount ?: 0}"
+            data-i18n-suffix="category.articles"
+          ></span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="widget widget-recent-posts" th:if="${theme.config?.sidebar?.show_recent != false}">
+    <div class="widget-title">
+      <span class="title-text" data-i18n="sidebar.recent_comments">最新文章</span>
+      <a class="widget-link" th:href="@{${site.routes.archivesUri}}"
+        ><span data-i18n="sidebar.view_all">查看全部</span></a
+      >
+    </div>
+    <div class="recent-post-list">
+      <a
+        th:each="post : ${postFinder.list({page: 1, size: theme.config?.sidebar?.recent_count ?: 4}).items}"
+        th:href="@{${post.status.permalink}}"
+        class="recent-post-item"
+      >
+        <div class="recent-post-thumb">
+          <img
+            th:if="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
+            th:src="${post.spec.cover}"
+            alt=""
+            loading="lazy"
+          />
+          <span
+            class="recent-post-thumb-placeholder"
+            th:unless="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
+            >&lt;/&gt;</span
+          >
+        </div>
+        <div class="recent-post-info">
+          <span class="recent-post-title" th:text="${post.spec.title}"></span>
+          <span class="recent-post-date">
+            <time
+              th:text="${post.spec.publishTime != null ? #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') : ''}"
+            ></time>
+            <span
+              class="recent-post-new"
+              th:if="${post.spec.publishTime != null and T(java.time.Instant).now().minusMillis(604800000).isBefore(post.spec.publishTime)}"
+              >New</span
+            >
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</aside>

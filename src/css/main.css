@@ -1,0 +1,746 @@
+/* ============================================
+   顾子鞍 (ShaneYu) — Halo Theme
+   源于禹州，面向世界。Shane Yu是一款为开发者打造的现代博客主题。
+   ============================================ */
+
+/* ---------- 自定义字体 ---------- */
+@font-face {
+  font-family: "Xingkai";
+  src: url("../assets/fonts/Xingkai.ttc") format("collection");
+  font-display: swap;
+}
+
+/* ---------- CSS变量 ---------- */
+/* 全局-主题颜色 */
+:root {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-primary-bg: #eff6ff;
+  --color-primary-border: #93c5fd;
+
+  --author-bg-overlay-color: #000000;
+  --author-bg-overlay-opacity: 0.35;
+  --author-bg-text-color: #ffffff;
+
+  --color-bg: #f8fafc;
+  --color-card: #ffffff;
+  --color-card-hover: #f8fafc;
+  --color-text: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-dark: #0f172a;
+
+  --container-max: 1200px;
+  --container-md: 960px;
+  --container-sm: 720px;
+  --header-height: 64px;
+  --sidebar-width: 320px;
+  --sidebar-width-md: 280px;
+  --content-gap: 24px;
+  --content-gap-md: 20px;
+  --toc-width: 240px;
+
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.12);
+
+  --transition: 0.2s ease;
+
+  --font-sans:
+    "Xingkai", "LXGW WenKai Screen", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Source Han Sans CN", "Noto Sans CJK SC",
+    sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  --font-xingkai: "Xingkai", "LXGW WenKai Screen", cursive;
+
+  --color-bg-dark: #0f172a;
+  --color-card-dark: #1e293b;
+  --color-card-hover-dark: #334155;
+  --color-text-dark: #f1f5f9;
+  --color-text-secondary-dark: #94a3b8;
+  --color-text-muted-dark: #64748b;
+  --color-border-dark: #334155;
+  --color-border-light-dark: #1e293b;
+  --color-dark-dark: #f1f5f9;
+
+  --color-primary-bg-dark: rgba(44, 124, 218, 0.15);
+  --color-primary-border-dark: rgba(44, 124, 218, 0.3);
+
+  --shadow-sm-dark: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-hover-dark: 0 8px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: var(--color-bg-dark);
+  --color-card: var(--color-card-dark);
+  --color-card-hover: var(--color-card-hover-dark);
+  --color-text: var(--color-text-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-text-muted: var(--color-text-muted-dark);
+  --color-border: var(--color-border-dark);
+  --color-border-light: var(--color-border-light-dark);
+  --color-dark: var(--color-dark-dark);
+
+  --color-primary-bg: var(--color-primary-bg-dark);
+  --color-primary-border: var(--color-primary-border-dark);
+
+  --shadow-sm: var(--shadow-sm-dark);
+  --shadow: var(--shadow-dark);
+  --shadow-md: var(--shadow-md-dark);
+  --shadow-lg: var(--shadow-lg-dark);
+  --shadow-hover: var(--shadow-hover-dark);
+}
+
+/* ---------- 重置与基础样式 ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.has-wallpaper {
+  background-color: transparent;
+}
+
+body.has-wallpaper .site-header {
+  background: color-mix(in srgb, var(--color-card) 70%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .site-footer {
+  background: color-mix(in srgb, var(--color-card) 70%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .widget {
+  background: color-mix(in srgb, var(--color-card) 70%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .post-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .post-content,
+body.has-wallpaper .post-header {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .comment-list,
+body.has-wallpaper .comment-form {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .page-content {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .btn-outline {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.has-wallpaper .tag {
+  background: color-mix(in srgb, var(--color-primary-bg) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.has-wallpaper .pagination-item {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.has-wallpaper .share-item {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.has-wallpaper .action-share-menu {
+  background: color-mix(in srgb, var(--color-card) 85%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .article-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .page-header-inner {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .archive-month-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .archive-year-badge {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .category-item {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .category-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .tag-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .article-detail {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.has-wallpaper .post-actions-bar {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.has-wallpaper .floating-backtop {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+body.has-wallpaper .post-nav-item {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.wallpaper-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.has-wallpaper .wallpaper-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: color-mix(in srgb, var(--color-bg) 30%, transparent);
+  z-index: 1;
+}
+
+.wallpaper-video,
+.wallpaper-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.wallpaper-video.light-mode,
+.wallpaper-image.light-mode {
+  opacity: 1;
+}
+
+[data-theme="dark"] .wallpaper-video.light-mode,
+[data-theme="dark"] .wallpaper-image.light-mode {
+  opacity: 0;
+}
+
+[data-theme="dark"] .wallpaper-video.dark-mode,
+[data-theme="dark"] .wallpaper-image.dark-mode {
+  opacity: 1;
+}
+
+.wallpaper-video.light-mode + .wallpaper-image.light-mode {
+  display: none;
+}
+
+[data-theme="dark"] .wallpaper-video.dark-mode + .wallpaper-image.dark-mode {
+  display: none;
+}
+
+/* ---------- 全局滚动条美化 ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-primary) 45%, transparent) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-primary) 70%, transparent);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-primary);
+  background-clip: padding-box;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  background-clip: padding-box;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  background-clip: padding-box;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ---------- 容器 ---------- */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: var(--container-md);
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: var(--container-sm);
+  }
+}
+
+/* ---------- 布局 ---------- */
+.layout-grid {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: var(--content-gap);
+  align-items: start;
+}
+
+.layout-grid.no-sidebar {
+  grid-template-columns: 1fr;
+}
+
+.content-area {
+  min-width: 0;
+}
+
+.site-main {
+  padding: 32px 0 40px;
+}
+
+@media (max-width: 1200px) {
+  .layout-grid {
+    grid-template-columns: var(--sidebar-width-md) 1fr;
+    gap: var(--content-gap-md);
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+    gap: var(--content-gap-md);
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+/* ---------- 标签与徽章 ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  transition: all var(--transition);
+}
+
+.tag:hover {
+  border-color: var(--color-primary);
+}
+
+/* ---------- 页面头部 ---------- */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+
+.page-header-inner:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.page-header-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-bg),
+    color-mix(in srgb, var(--color-primary-bg) 70%, transparent)
+  );
+  border-radius: var(--radius-lg);
+  transition: all var(--transition);
+}
+
+.page-header-icon svg {
+  width: 26px;
+  height: 26px;
+  color: var(--color-primary);
+}
+
+.page-header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.page-header-content .page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.page-header-content .page-desc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 8px 0;
+}
+
+.page-header-content .page-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-header-content .page-count {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  padding: 3px 10px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+}
+
+.page-header-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.page-header-stats .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  min-width: 70px;
+}
+
+.page-header-stats .stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.page-header-stats .stat-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.page-header-right {
+  flex-shrink: 0;
+}
+
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  border-radius: var(--radius-full);
+}
+
+.page-back-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- 分页 ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px 0 8px;
+}
+
+.pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+
+.pagination a:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.pagination .current {
+  font-size: 14px;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.pagination .page-separator {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.pagination .disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- 错误页面 ---------- */
+.error-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.error-content {
+  text-align: center;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  box-shadow: var(--shadow-lg);
+  max-width: 420px;
+  width: 100%;
+}
+
+.error-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.error-icon svg {
+  width: 64px;
+  height: 64px;
+}
+
+.error-content h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.error-content > p {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 12px;
+}
+
+.error-desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+.error-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  background: transparent;
+  border-radius: var(--radius-full);
+  transition: all var(--transition);
+}
+
+.error-btn:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.error-btn.secondary {
+  color: var(--color-text);
+  background: transparent;
+}
+
+.error-btn.secondary:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}

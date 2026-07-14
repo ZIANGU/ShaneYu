@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+  lang="zh-CN"
+  xmlns:th="http://www.thymeleaf.org"
+  th:data-primary-color="${theme.config?.basic?.primary_color}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|错误 - ${site.title}|">错误</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
+    <script>
+      var primaryColor = document.documentElement.getAttribute("data-primary-color");
+      if (primaryColor) {
+        document.documentElement.style.setProperty("--color-primary", primaryColor);
+      }
+      (function () {
+        var s = localStorage.getItem("ShaneYu-theme");
+        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
+        if (s) {
+          document.documentElement.setAttribute("data-theme", s);
+        } else if (c === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else if (c === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="site-body">
+    <div class="error-page">
+      <div class="error-content">
+        <div class="error-icon">
+          <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="60" cy="60" r="45" />
+            <path d="M35 60 L55 80 L85 35" />
+          </svg>
+        </div>
+        <h1 th:text="${status ?: '错误'}">错误</h1>
+        <p th:text="${message ?: '发生了一个错误'}">发生了一个错误</p>
+        <p class="error-desc">抱歉，页面出现问题，请稍后重试</p>
+        <a th:href="@{/}" class="error-btn">返回首页</a>
+      </div>
+    </div>
+  </body>
+</html>

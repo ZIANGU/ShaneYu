@@ -1,0 +1,56 @@
+<!doctype html>
+<html
+  lang="zh-CN"
+  xmlns:th="http://www.thymeleaf.org"
+  th:data-primary-color="${theme.config?.basic?.primary_color}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|500 - ${site.title}|">500 - 服务器错误</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
+    <script>
+      var primaryColor = document.documentElement.getAttribute("data-primary-color");
+      if (primaryColor) {
+        document.documentElement.style.setProperty("--color-primary", primaryColor);
+      }
+      (function () {
+        var s = localStorage.getItem("ShaneYu-theme");
+        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
+        if (s) {
+          document.documentElement.setAttribute("data-theme", s);
+        } else if (c === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else if (c === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="site-body">
+    <div class="error-page">
+      <div class="error-content">
+        <div class="error-icon">
+          <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="60" cy="60" r="45" />
+            <line x1="60" y1="35" x2="60" y2="85" />
+            <circle cx="60" cy="60" r="20" />
+            <circle cx="50" cy="50" r="3" fill="currentColor" />
+            <circle cx="70" cy="50" r="3" fill="currentColor" />
+            <path d="M50 70 Q60 80 70 70" />
+          </svg>
+        </div>
+        <h1>500</h1>
+        <p>服务器错误</p>
+        <p class="error-desc">抱歉，服务器内部发生错误，请稍后重试</p>
+        <div class="error-actions">
+          <button onclick="location.reload()" class="error-btn">刷新页面</button>
+          <a th:href="@{/}" class="error-btn secondary">返回首页</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

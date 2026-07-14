@@ -1,0 +1,141 @@
+<include src="partials/layout.html">
+  <template name="head">
+    <title th:text="|${tag.spec.displayName} - ${site.title}|">标签</title>
+    <link rel="stylesheet" href="./css/tags.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="partials/sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+              />
+              <line x1="7" y1="7" x2="7.01" y2="7" />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" th:text="${tag.spec.displayName}"></h1>
+            <p
+              class="page-desc"
+              th:if="${tag.spec.description}"
+              th:text="${tag.spec.description}"
+            ></p>
+            <div class="page-header-meta">
+              <span class="page-count"
+                ><span th:text="${posts.total}"></span>
+                <span data-i18n="tag.articles">篇文章</span></span
+              >
+            </div>
+          </div>
+          <div class="page-header-right">
+            <a th:href="@{${site.routes.tagsUri}}" class="page-back-link">
+              <span data-i18n="tag.view_all">查看全部</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="tag.article_list">文章列表</h2>
+      </div>
+
+      <div class="article-list">
+        <th:block th:each="post : ${posts.items}">
+          <article class="article-card">
+            <a
+              class="article-thumb"
+              th:href="@{${post.status.permalink}}"
+              th:with="builtinCover = @{/assets/images/default_post_cover.png}, coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
+            >
+              <img th:if="${coverUrl != null}" th:src="${coverUrl}" alt="" loading="lazy" />
+              <span class="article-thumb-placeholder" th:unless="${coverUrl != null}"
+                >&lt;/&gt;</span
+              >
+            </a>
+            <div class="article-body">
+              <h3 class="article-card-title">
+                <span class="pinned-badge" th:if="${post.spec.pinned}" data-i18n="common.pinned"
+                  >置顶</span
+                >
+                <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+              </h3>
+              <p class="article-card-excerpt" th:text="${post.status.excerpt}"></p>
+              <div class="article-card-tags" th:if="${not #lists.isEmpty(post.tags)}">
+                <a
+                  th:each="postTag : ${post.tags}"
+                  th:href="@{${postTag.status.permalink}}"
+                  th:text="${postTag.spec.displayName}"
+                  class="tag"
+                ></a>
+              </div>
+              <div class="article-card-meta">
+                <span class="meta-item" th:if="${post.owner}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <span th:text="${post.owner?.displayName}"></span>
+                </span>
+                <span class="meta-item" th:if="${not #lists.isEmpty(post.categories)}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                    />
+                  </svg>
+                  <a
+                    th:href="@{${post.categories[0].status.permalink}}"
+                    th:text="${post.categories[0].spec.displayName}"
+                    style="color: inherit"
+                  ></a>
+                </span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  <time
+                    th:text="${post.spec.publishTime != null ? #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') : ''}"
+                  ></time>
+                </span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span th:text="${post.stats?.visit ?: 0}"></span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </th:block>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(posts.items)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+          />
+        </svg>
+        <p data-i18n="tag.empty">该标签下暂无文章</p>
+      </div>
+
+      <include src="partials/pagination.html"></include>
+    </div>
+  </div>
+</include>

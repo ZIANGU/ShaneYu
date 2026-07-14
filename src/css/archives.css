@@ -1,0 +1,312 @@
+/* ============================================
+   归档时间线（鱼骨头布局）
+   ============================================ */
+.archive-timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.archive-timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+
+.archive-year-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.archive-year-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.archive-year-badge::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  width: 2px;
+  height: 20px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.archive-year-badge::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+  width: 2px;
+  height: 20px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.archive-month-group {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.archive-month-group.side-left {
+  padding-right: calc(50% + 32px);
+}
+
+.archive-month-group.side-right {
+  padding-left: calc(50% + 32px);
+}
+
+.archive-month-card {
+  width: 100%;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  transition: all var(--transition);
+}
+
+.archive-month-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.archive-month-connector {
+  position: absolute;
+  top: 10px;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.archive-month-group.side-left .archive-month-connector {
+  left: auto;
+  right: calc(50% - 8px);
+  width: 24px;
+}
+
+.archive-month-group.side-right .archive-month-connector {
+  right: auto;
+  left: calc(50% - 8px);
+  width: 24px;
+}
+
+.archive-month-dot {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--color-primary);
+  border: 3px solid var(--color-card);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--color-border);
+  transform: translateX(-50%);
+}
+
+.archive-month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.archive-month-header .month-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.archive-post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.archive-post-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--color-border-light);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.archive-post-list li:last-child {
+  border-bottom: none;
+}
+
+.archive-post-list li:hover {
+  background: var(--color-card-hover);
+  margin: 0 -20px;
+  padding: 8px 20px;
+  border-radius: 6px;
+}
+
+.archive-post-date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.archive-post-title {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-post-title:hover {
+  color: var(--color-primary);
+}
+
+@media (max-width: 1200px) {
+  .archive-month-card {
+    max-width: calc(50% - 10px);
+  }
+
+  .archive-year-badge {
+    font-size: 18px;
+    padding: 8px 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .archive-timeline::before {
+    left: 50%;
+  }
+
+  .archive-year-section {
+    justify-content: center;
+  }
+
+  .archive-month-card {
+    max-width: 85%;
+  }
+
+  .archive-month-group.side-left .archive-month-card {
+    margin-left: 0;
+  }
+
+  .archive-month-group.side-right .archive-month-card {
+    margin-right: 0;
+  }
+
+  .archive-month-group.side-left {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .archive-month-group.side-right {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .archive-timeline::before {
+    left: 28px;
+    transform: none;
+  }
+
+  .archive-year-section {
+    justify-content: flex-start;
+    padding-left: 52px;
+  }
+
+  .archive-year-badge {
+    position: relative;
+    font-size: 16px;
+    padding: 6px 16px;
+  }
+
+  .archive-year-badge::before,
+  .archive-year-badge::after {
+    display: none;
+  }
+
+  .archive-year-badge::before {
+    content: "";
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    width: 28px;
+    height: 2px;
+    background: var(--color-border);
+    transform: translateY(-50%);
+  }
+
+  .archive-month-group {
+    flex-direction: row !important;
+    padding-right: 0 !important;
+    padding-left: 52px !important;
+  }
+
+  .archive-month-group.side-left .archive-month-card,
+  .archive-month-group.side-right .archive-month-card {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .archive-month-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  .archive-month-connector {
+    position: absolute;
+    left: 16px;
+    top: 10px;
+    width: 12px;
+    height: 2px;
+    transform: none;
+  }
+
+  .archive-month-group.side-left .archive-month-connector,
+  .archive-month-group.side-right .archive-month-connector {
+    transform: none;
+  }
+
+  .archive-month-dot {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    transform: none;
+  }
+
+  .archive-post-list li:hover {
+    margin: 0 -16px;
+    padding: 8px 16px;
+  }
+}

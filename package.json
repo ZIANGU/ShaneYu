@@ -1,0 +1,28 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "tsc && vp build && theme-package && bash build-zip.sh",
+    "build-only": "tsc && vp build",
+    "dev": "vp build --watch",
+    "check": "vp check --fix",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "@halo-dev/theme-package-cli": "^1.0.1",
+    "@halo-dev/vite-plugin-halo-theme": "^1.0.3",
+    "@types/node": "18.11.9",
+    "typescript": "^5.9.3",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "latest"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    }
+  }
+}

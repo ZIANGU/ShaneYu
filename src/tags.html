@@ -1,0 +1,81 @@
+<include src="layout.html">
+  <template name="head">
+    <title th:text="|思想碎片 - ${site.title}|">思想碎片</title>
+    <link rel="stylesheet" href="./css/tags.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575z"
+              />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" data-i18n="tags.title">思想碎片</h1>
+            <p class="page-desc">拾起散落的灵感碎片，拼凑出完整的思考图景</p>
+          </div>
+          <div class="page-header-stats">
+            <div class="stat-item">
+              <span class="stat-value" th:text="${#lists.size(tags)}"></span>
+              <span class="stat-label" data-i18n="nav.tags">标签</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tag-cards" th:if="${not #lists.isEmpty(tags)}">
+        <a th:each="tag : ${tags}" th:href="@{${tag.status.permalink}}" class="tag-card">
+          <div class="tag-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+              />
+            </svg>
+          </div>
+          <div class="tag-card-text">
+            <div class="tag-card-name" th:text="${tag.spec.displayName}"></div>
+            <div
+              class="tag-card-desc"
+              th:if="${tag.spec.description != null and !#strings.isEmpty(tag.spec.description)}"
+              th:text="${tag.spec.description}"
+            ></div>
+            <div class="tag-card-count">
+              <span th:text="${tag.postCount != null ? tag.postCount : 0}"></span>
+              <span data-i18n="tag.articles">篇文章</span>
+            </div>
+          </div>
+          <svg
+            class="tag-card-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(tags)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+          />
+        </svg>
+        <p data-i18n="tags.empty">暂无标签</p>
+      </div>
+    </div>
+  </div>
+</include>

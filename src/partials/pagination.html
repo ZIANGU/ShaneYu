@@ -1,0 +1,29 @@
+<nav class="pagination" th:if="${posts.hasPrevious() || posts.hasNext()}">
+  <a th:if="${posts.hasPrevious()}" th:href="@{${posts.prevUrl}}">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      style="width: 14px; height: 14px"
+    >
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+    <span data-i18n="pagination.prev">上一页</span>
+  </a>
+  <span class="current" th:text="${posts.page}"></span>
+  <span class="page-separator">/</span>
+  <span class="current" th:text="${posts.totalPages}"></span>
+  <a th:if="${posts.hasNext()}" th:href="@{${posts.nextUrl}}">
+    <span data-i18n="pagination.next">下一页</span>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      style="width: 14px; height: 14px"
+    >
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  </a>
+</nav>

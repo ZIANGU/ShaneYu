@@ -1,0 +1,115 @@
+<include src="layout.html">
+  <template name="head">
+    <title th:text="|流年记事 - ${site.title}|">流年记事</title>
+    <link rel="stylesheet" href="./css/archives.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" data-i18n="archives.title">流年记事</h1>
+            <p class="page-desc">循着时光的足迹，重温每一篇文字</p>
+          </div>
+          <div class="page-header-stats">
+            <div class="stat-item">
+              <span class="stat-value" th:text="${archives.total}"></span>
+              <span class="stat-label" data-i18n="nav.archives">文章</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="archive-timeline">
+        <th:block th:each="archive : ${archives.items}">
+          <div class="archive-year-section">
+            <div class="archive-year-badge" th:text="${archive.year}"></div>
+          </div>
+          <th:block th:each="month, archiveMonthStat : ${archive.months}">
+            <div
+              class="archive-month-group"
+              th:classappend="${archiveMonthStat.odd ? ' side-left' : ' side-right'}"
+            >
+              <div class="archive-month-card">
+                <div class="archive-month-header">
+                  <span th:text="${month.month + ' 月'}"></span>
+                  <span class="month-count" th:text="${#lists.size(month.posts) + ' 篇'}"></span>
+                </div>
+                <ul class="archive-post-list">
+                  <li th:each="post : ${month.posts}">
+                    <span
+                      class="archive-post-date"
+                      th:text="${post.spec.publishTime != null ? #temporals.format(post.spec.publishTime, 'MM-dd') : ''}"
+                    ></span>
+                    <a
+                      class="archive-post-title"
+                      th:href="@{${post.status.permalink}}"
+                      th:text="${post.spec.title}"
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="archive-month-connector"></div>
+              <div class="archive-month-dot"></div>
+            </div>
+          </th:block>
+        </th:block>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(archives.items)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <p data-i18n="archives.empty">暂无文章归档</p>
+      </div>
+
+      <nav class="pagination" th:if="${archives.hasPrevious() || archives.hasNext()}">
+        <a th:if="${archives.hasPrevious()}" th:href="@{${archives.prevUrl}}">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </a>
+        <span class="current" th:text="${archives.page}"></span>
+        <span
+          style="border: none; background: none; color: var(--color-text-muted)"
+          th:text="'/' + ${archives.totalPages}"
+        ></span>
+        <a th:if="${archives.hasNext()}" th:href="@{${archives.nextUrl}}">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+</include>

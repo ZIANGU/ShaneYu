@@ -1,0 +1,129 @@
+<include src="partials/layout.html">
+  <template name="head">
+    <title th:text="|${category.spec.displayName} - ${site.title}|">分类</title>
+    <link rel="stylesheet" href="./css/tags.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="partials/sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z" />
+              <polyline points="15 12 9 12 9 18" />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" th:text="${category.spec.displayName}"></h1>
+            <p
+              class="page-desc"
+              th:if="${category.spec.description}"
+              th:text="${category.spec.description}"
+            ></p>
+            <div class="page-header-meta">
+              <span class="page-count"
+                ><span th:text="${posts.total}"></span>
+                <span data-i18n="category.articles">篇文章</span></span
+              >
+            </div>
+          </div>
+          <div class="page-header-right">
+            <a th:href="@{${site.routes.categoriesUri}}" class="page-back-link">
+              <span data-i18n="category.view_all">查看全部</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="category.article_list">文章列表</h2>
+      </div>
+
+      <div class="article-list">
+        <th:block th:each="post : ${posts.items}">
+          <article class="article-card">
+            <a class="article-thumb" th:href="@{${post.status.permalink}}">
+              <img
+                th:if="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
+                th:src="${post.spec.cover}"
+                alt=""
+                loading="lazy"
+              />
+              <span
+                class="article-thumb-placeholder"
+                th:unless="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
+                >&lt;/&gt;</span
+              >
+            </a>
+            <div class="article-body">
+              <h3 class="article-card-title">
+                <span class="pinned-badge" th:if="${post.spec.pinned}" data-i18n="common.pinned"
+                  >置顶</span
+                >
+                <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+              </h3>
+              <p class="article-card-excerpt" th:text="${post.status.excerpt}"></p>
+              <div class="article-card-tags" th:if="${not #lists.isEmpty(post.tags)}">
+                <a
+                  th:each="tag : ${post.tags}"
+                  th:href="@{${tag.status.permalink}}"
+                  th:text="${tag.spec.displayName}"
+                  class="tag"
+                ></a>
+              </div>
+              <div class="article-card-meta">
+                <span class="meta-item" th:if="${post.owner}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                  <span th:text="${post.owner?.displayName}"></span>
+                </span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  <time
+                    th:text="${post.spec.publishTime != null ? #temporals.format(post.spec.publishTime, 'yyyy-MM-dd') : ''}"
+                  ></time>
+                </span>
+                <span class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <span th:text="${post.stats?.visit ?: 0}"></span>
+                </span>
+              </div>
+            </div>
+          </article>
+        </th:block>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(posts.items)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        <p data-i18n="category.empty">该分类下暂无文章</p>
+      </div>
+
+      <include src="partials/pagination.html"></include>
+    </div>
+  </div>
+</include>

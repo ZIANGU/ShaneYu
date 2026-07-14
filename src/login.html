@@ -1,0 +1,282 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:lang="${#locale.toLanguageTag}"
+  th:data-primary-color="${theme.config?.basic?.primary_color}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|登录 - ${site.title}|">登录</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/login.css" />
+    <script type="module" src="./js/login.ts"></script>
+    <link
+      rel="stylesheet"
+      href="//npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
+    <script src="/webjars/jsencrypt/3.5.4/bin/jsencrypt.min.js" defer></script>
+    <script>
+      var primaryColor = document.documentElement.getAttribute("data-primary-color");
+      if (primaryColor) {
+        document.documentElement.style.setProperty("--color-primary", primaryColor);
+      }
+      // 主题模式（与主站保持一致）
+      (function () {
+        var s = localStorage.getItem("ShaneYu-theme");
+        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
+        if (s) {
+          document.documentElement.setAttribute("data-theme", s);
+        } else if (c === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else if (c === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="login-body">
+    <div class="login-container">
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-illustration">
+          <svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="50" y="80" width="300" height="180" rx="8" stroke-opacity="0.3" />
+            <rect x="70" y="100" width="80" height="60" rx="4" />
+            <rect
+              x="70"
+              y="100"
+              width="80"
+              height="12"
+              rx="2"
+              fill="currentColor"
+              fill-opacity="0.1"
+            />
+            <line x1="80" y1="125" x2="140" y2="125" stroke-opacity="0.4" />
+            <line x1="80" y1="138" x2="130" y2="138" stroke-opacity="0.4" />
+            <line x1="80" y1="151" x2="145" y2="151" stroke-opacity="0.4" />
+            <rect x="170" y="100" width="160" height="140" rx="4" />
+            <rect
+              x="185"
+              y="115"
+              width="130"
+              height="10"
+              rx="2"
+              fill="currentColor"
+              fill-opacity="0.15"
+            />
+            <circle cx="200" cy="145" r="35" stroke-opacity="0.6" />
+            <circle cx="200" cy="145" r="20" stroke-opacity="0.4" />
+            <circle cx="200" cy="145" r="8" fill="currentColor" fill-opacity="0.2" />
+            <line x1="185" y1="195" x2="305" y2="195" stroke-opacity="0.4" />
+            <line x1="185" y1="210" x2="280" y2="210" stroke-opacity="0.4" />
+            <line x1="185" y1="225" x2="295" y2="225" stroke-opacity="0.4" />
+            <circle cx="350" cy="60" r="40" stroke-opacity="0.2" />
+            <circle cx="60" cy="260" r="30" stroke-opacity="0.2" />
+            <circle cx="340" cy="250" r="20" stroke-opacity="0.15" />
+          </svg>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1 data-i18n="login.welcome">欢迎回来</h1>
+            <p data-i18n="login.subtitle">请登录您的账户</p>
+          </div>
+
+          <form th:action="@{/login}" method="post" class="login-form" id="login-form">
+            <input
+              type="hidden"
+              th:if="${_csrf}"
+              th:name="${_csrf.parameterName}"
+              th:value="${_csrf.token}"
+            />
+            <input type="hidden" name="password" id="password" />
+            <div class="form-group">
+              <label for="username" data-i18n="login.username">用户名</label>
+              <div class="form-input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="请输入用户名"
+                  data-i18n-placeholder="login.username"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password" data-i18n="login.password">密码</label>
+              <div class="form-input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <input
+                  type="password"
+                  id="plainPassword"
+                  name="plainPassword"
+                  placeholder="请输入密码"
+                  data-i18n-placeholder="login.password"
+                  required
+                />
+                <button type="button" class="password-toggle" id="passwordToggle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1 4.24 4.24"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="checkbox-label">
+                <input type="checkbox" name="remember" />
+                <span class="checkbox-custom"></span>
+                <span data-i18n="login.remember">记住我</span>
+              </label>
+            </div>
+
+            <button type="submit" class="login-btn">
+              <span data-i18n="login.submit">登 录</span>
+            </button>
+          </form>
+
+          <div
+            class="login-divider"
+            th:if="${authProviders != null and !#lists.isEmpty(authProviders)}"
+          >
+            <span data-i18n="login.or">或</span>
+          </div>
+
+          <div
+            class="login-alternative"
+            th:if="${authProviders != null and !#lists.isEmpty(authProviders)}"
+          >
+            <a
+              th:each="provider : ${authProviders}"
+              th:href="@{${provider.authenticationUrl}}"
+              class="oauth-btn"
+              th:classappend="${'oauth-' + provider.name}"
+            >
+              <svg th:if="${provider.name == 'github'}" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+              <svg th:if="${provider.name == 'gitee'}" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.94 13.08c-.04.96-.76 2.58-2.06 4.28-1.04 1.36-2.52 2.64-4.18 2.64h-.02c-1.22 0-2.18-.56-3.24-1.74-.62-.68-1.12-1.48-1.5-2.34-.12-.28.04-.6.34-.68.28-.08.58.06.72.32.32.62.72 1.2 1.18 1.72.72.82 1.44 1.24 2.14 1.24.98 0 2.02-.74 2.94-2.08.74-1.08 1.24-2.34 1.34-3.16.04-.34.32-.6.66-.6h1.04c.36 0 .64.3.64.66v.02-.28zM12 5.5c-2.48 0-4.5 2.02-4.5 4.5s2.02 4.5 4.5 4.5 4.5-2.02 4.5-4.5-2.02-4.5-4.5-4.5zm0 7.5c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"
+                />
+              </svg>
+              <svg th:if="${provider.name == 'google'}" viewBox="0 0 24 24">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  fill="#EA4335"
+                />
+              </svg>
+              <svg
+                th:if="${provider.name != 'github' and provider.name != 'gitee' and provider.name != 'google'}"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span th:text="${provider.displayName}"></span>
+            </a>
+          </div>
+
+          <div class="login-footer" th:if="${site.allowRegistration}">
+            <p>
+              <span data-i18n="login.no_account">还没有账户？</span>
+              <a th:href="@{/register}" data-i18n="login.register">立即注册</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const passwordToggle = document.getElementById("passwordToggle");
+      const passwordInput = document.getElementById("plainPassword");
+      const icons = passwordToggle.querySelectorAll("svg");
+
+      passwordToggle.addEventListener("click", () => {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        icons.forEach((icon, index) => {
+          icon.style.display = index === (type === "password" ? 0 : 1) ? "block" : "none";
+        });
+      });
+
+      // RSA 密码加密（Halo 本地登录需要）
+      const publicKey = /*[[${publicKey}]]*/ "";
+      const loginForm = document.getElementById("login-form");
+      if (publicKey && loginForm) {
+        loginForm.addEventListener("submit", function (event) {
+          const plainPasswordInput = document.getElementById("plainPassword");
+          const passwordInput = document.getElementById("password");
+          if (plainPasswordInput.value) {
+            const encrypt = new JSEncrypt();
+            encrypt.setPublicKey(publicKey);
+            passwordInput.value = encrypt.encrypt(plainPasswordInput.value);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
