@@ -9,7 +9,7 @@
     th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
   >
     <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
-      <include src="sidebar.html"></include>
+      <include src="partials/sidebar.html"></include>
     </th:block>
 
     <div class="content-area">
@@ -24,7 +24,7 @@
           </div>
           <div class="page-header-content">
             <h1 class="page-title" data-i18n="tags.title">思想碎片</h1>
-            <p class="page-desc">拾起散落的灵感碎片，拼凑出完整的思考图景</p>
+            <p class="page-desc" data-i18n="tags.desc">拾起散落的灵感碎片，拼凑出完整的思考图景</p>
           </div>
           <div class="page-header-stats">
             <div class="stat-item">

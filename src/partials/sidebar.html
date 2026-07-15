@@ -70,7 +70,7 @@
             <img
               th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
               th:if="${link.icon == 'weibo'}"
-              src="./assets/icons/weibo.ico"
+              src="./assets/icons/webo.svg"
               alt="Weibo"
               class="author-link-icon"
             />
@@ -100,6 +100,13 @@
               th:if="${link.icon == 'wechat'}"
               src="./assets/icons/wechat.svg"
               alt="Wechat"
+              class="author-link-icon"
+            />
+            <img
+              th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+              th:if="${link.icon == 'zhihu'}"
+              src="./assets/icons/zhihu.svg"
+              alt="Zhihu"
               class="author-link-icon"
             />
           </a>

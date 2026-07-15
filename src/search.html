@@ -1,0 +1,116 @@
+<include src="layout.html">
+  <template name="head">
+    <title th:text="|搜索 - ${site.title}|">搜索</title>
+    <link rel="stylesheet" href="./css/search.css" />
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="partials/sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" data-i18n="search.title">搜索</h1>
+            <p class="page-desc" data-i18n="search.desc">在文字的世界中，寻找你心中的答案</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 搜索框 -->
+      <div class="search-bar">
+        <form class="search-form" id="searchForm" onsubmit="return false;">
+          <div class="search-input-wrap">
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              data-i18n-placeholder="search.placeholder"
+              placeholder="输入关键词搜索文章..."
+              autocomplete="off"
+            />
+            <button type="submit" class="search-btn" data-i18n="search.btn">搜索</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 搜索结果信息 -->
+      <div class="search-meta" id="searchMeta" style="display: none">
+        <span class="search-meta-text">
+          <span data-i18n="search.results_for">搜索结果：</span>
+          "<span id="searchKeyword"></span>" — <span id="searchCount"></span>
+          <span data-i18n="search.results_count">条结果</span>
+        </span>
+      </div>
+
+      <!-- 加载中 -->
+      <div class="search-loading" id="searchLoading" style="display: none">
+        <div class="loading-spinner"></div>
+        <span data-i18n="common.loading">加载中...</span>
+      </div>
+
+      <!-- 搜索结果列表 -->
+      <div class="search-results" id="searchResults"></div>
+
+      <!-- 空状态 -->
+      <div class="search-empty" id="searchEmpty" style="display: none">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <line x1="8" y1="11" x2="14" y2="11" />
+          </svg>
+        </div>
+        <p class="empty-text" data-i18n="search.no_results">未找到相关文章</p>
+        <p class="empty-hint" data-i18n="search.no_results_hint">
+          试试更换关键词，或者浏览分类和标签
+        </p>
+      </div>
+
+      <!-- 初始状态（无搜索时显示） -->
+      <div class="search-initial" id="searchInitial">
+        <div class="initial-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </div>
+        <p class="initial-text" data-i18n="search.initial">输入关键词开始搜索</p>
+      </div>
+
+      <!-- 分页 -->
+      <div class="search-pagination" id="searchPagination" style="display: none">
+        <button class="pagination-btn prev" id="prevPage" data-i18n="pagination.prev">
+          上一页
+        </button>
+        <span class="pagination-info" id="paginationInfo"></span>
+        <button class="pagination-btn next" id="nextPage" data-i18n="pagination.next">
+          下一页
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/search.ts"></script>
+</include>

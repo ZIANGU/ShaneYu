@@ -132,6 +132,30 @@
   gap: 20px;
 }
 
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-lg);
+  color: #dc2626;
+  font-size: 14px;
+}
+
+[data-theme="dark"] .login-error {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #f87171;
+}
+
+.login-error svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -332,6 +356,286 @@
 
 .login-footer a:hover {
   text-decoration: underline;
+}
+
+/* ============================================
+   Halo 内置表单样式适配
+   ============================================ */
+.halo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.halo-form .form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.halo-form .form-item label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.halo-form .form-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: none !important;
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.halo-form .form-input input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  color: var(--color-text);
+  font-size: 15px;
+  outline: none;
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+
+.halo-form .form-input input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+.halo-form .form-input input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.halo-form .form-input-stack {
+  display: flex;
+  align-items: center;
+}
+
+.halo-form .form-input-stack input {
+  flex: 1;
+  min-width: 0;
+}
+
+.halo-form .form-input-stack-icon {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+}
+
+.halo-form .form-input-stack-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.halo-form .form-label-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.halo-form .form-item-extra-link {
+  font-size: 13px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.halo-form .form-item-extra-link:hover {
+  text-decoration: underline;
+}
+
+.halo-form .form-item-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.halo-form .form-item-compact input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.halo-form button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.halo-form button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--color-primary) 90%, black);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Halo 错误提示 */
+.halo-form .alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+}
+
+.halo-form .alert-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+[data-theme="dark"] .halo-form .alert-error {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #f87171;
+}
+
+/* Auth providers */
+.pill-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.pill-items li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 14px;
+  transition: all var(--transition);
+}
+
+.pill-items li a:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.pill-items li a img {
+  width: 18px;
+  height: 18px;
+}
+
+.divider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.divider-wrapper hr {
+  flex: 1;
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* TOTP 验证码页面 */
+.halo-form .cancel-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  display: block;
+}
+
+.halo-form .cancel-link:hover {
+  text-decoration: underline;
+}
+
+.halo-form .form-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0 0 24px 0;
+}
+
+/* ============================================
+   退出登录页面样式
+   ============================================ */
+.logout-user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
+.logout-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.logout-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.logout-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.logout-username {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-form .user-info {
+  display: none;
+}
+
+.logout-form .cancel-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  display: block;
+  padding: 8px 0;
+}
+
+.logout-form .cancel-link:hover {
+  color: var(--color-primary);
 }
 
 @media (max-width: 768px) {

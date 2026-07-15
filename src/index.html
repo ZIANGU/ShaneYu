@@ -6,7 +6,7 @@
   </template>
 
   <div class="layout-grid sidebar-left">
-    <include src="sidebar.html"></include>
+    <include src="partials/sidebar.html"></include>
     <div class="content-area">
       <h2 class="section-title">最新文章</h2>
       <div class="article-list" th:if="${not #lists.isEmpty(posts.items)}">

@@ -1,0 +1,64 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{gateway_fragments/layout :: layout(title = |重置密码 - ${site.title}|, head = ~{::head}, body = ~{::body})}"
+>
+  <th:block th:fragment="body">
+    <div class="login-container">
+      <!-- 左侧品牌区域 -->
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-illustration">
+          <svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="130" y="100" width="140" height="120" rx="12" stroke-opacity="0.4" />
+            <circle cx="200" cy="145" r="25" stroke-opacity="0.5" />
+            <path d="M192 145 L198 151 L210 139" stroke-opacity="0.6" stroke-width="2.5" />
+            <rect x="160" y="70" width="80" height="40" rx="8" stroke-opacity="0.3" />
+            <circle cx="200" cy="90" r="12" stroke-opacity="0.3" />
+            <circle cx="100" cy="250" r="20" stroke-opacity="0.15" />
+            <circle cx="310" cy="230" r="15" stroke-opacity="0.12" />
+          </svg>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <!-- 右侧重置密码表单 -->
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1>重置密码</h1>
+            <p>请设置您的新密码</p>
+          </div>
+
+          <!-- Halo 内置重置密码表单 -->
+          <form th:replace="~{gateway_fragments/password_reset_email_reset::form}"></form>
+
+          <div class="login-footer">
+            <p><a th:href="@{/login}">← 返回登录</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

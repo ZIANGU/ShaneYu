@@ -1,0 +1,209 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{gateway_fragments/layout :: layout(title = |两步验证 - ${site.title}|, head = ~{::head}, body = ~{::body})}"
+>
+  <th:block th:fragment="body">
+    <div class="login-container">
+      <!-- 左侧品牌区域 -->
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <!-- 右侧 TOTP 验证表单 -->
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1>两步验证</h1>
+            <p>请输入验证器应用中的 6 位验证码</p>
+          </div>
+
+          <!-- Halo 内置 TOTP 表单 -->
+          <form th:replace="~{gateway_fragments/totp::form}"></form>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:lang="${#locale.toLanguageTag}"
+  th:data-primary-color="${theme.config?.basic?.primary_color}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="|两步验证 - ${site.title}|">两步验证</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/login.css" />
+    <link
+      rel="stylesheet"
+      href="//npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
+    <script>
+      var primaryColor = document.documentElement.getAttribute("data-primary-color");
+      if (primaryColor) {
+        document.documentElement.style.setProperty("--color-primary", primaryColor);
+      }
+      (function () {
+        var s = localStorage.getItem("ShaneYu-theme");
+        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
+        if (s) {
+          document.documentElement.setAttribute("data-theme", s);
+        } else if (c === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else if (c === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="login-body">
+    <div class="login-container">
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-illustration">
+          <svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="100" y="50" width="200" height="200" rx="16" stroke-opacity="0.3" />
+            <rect x="140" y="90" width="120" height="30" rx="6" stroke-opacity="0.5" />
+            <rect x="140" y="130" width="120" height="30" rx="6" stroke-opacity="0.5" />
+            <rect x="140" y="170" width="120" height="30" rx="6" stroke-opacity="0.5" />
+            <circle cx="200" cy="140" r="60" stroke-opacity="0.2" />
+            <path d="M180 140 L195 155 L220 125" stroke-opacity="0.6" stroke-width="3" />
+          </svg>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1>两步验证</h1>
+            <p>请输入认证应用中的一次性验证码</p>
+          </div>
+
+          <div
+            class="login-error"
+            th:if="${param.error != null and param.error.size() > 0}"
+            th:with="error = ${param.error[0]}"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span th:if="${error == 'rate-limit-exceeded'}">验证尝试次数过多，请稍后再试</span>
+            <span th:unless="${error == 'rate-limit-exceeded'}">验证码无效，请重新输入</span>
+          </div>
+
+          <form
+            th:action="@{/challenges/two-factor/totp}"
+            name="two-factor-form"
+            id="two-factor-form"
+            method="post"
+            class="login-form"
+          >
+            <div class="form-group">
+              <label for="code">验证码</label>
+              <div class="form-input-wrap totp-input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  id="code"
+                  name="code"
+                  autocomplete="one-time-code"
+                  pattern="\d{6}"
+                  maxlength="6"
+                  placeholder="请输入6位数字验证码"
+                  autofocus
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="login-btn">
+              <span>验 证</span>
+            </button>
+          </form>
+
+          <div class="login-footer">
+            <p>
+              <a th:href="@{/logout}">取消登录</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("two-factor-form");
+        const codeInput = document.getElementById("code");
+        let submitting = false;
+
+        codeInput.addEventListener("input", function (event) {
+          if (submitting || event.isComposing) {
+            return;
+          }
+          if (/^\d{6}$/.test(codeInput.value)) {
+            submitting = true;
+            form.requestSubmit();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

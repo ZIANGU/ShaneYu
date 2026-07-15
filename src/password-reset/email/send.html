@@ -1,0 +1,98 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{gateway_fragments/layout :: layout(title = |找回密码 - ${site.title}|, head = ~{::head}, body = ~{::body})}"
+>
+  <th:block th:fragment="body">
+    <div class="login-container">
+      <!-- 左侧品牌区域 -->
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-illustration">
+          <svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="100" y="80" width="200" height="160" rx="12" stroke-opacity="0.3" />
+            <rect
+              x="120"
+              y="110"
+              width="160"
+              height="20"
+              rx="4"
+              fill="currentColor"
+              fill-opacity="0.1"
+            />
+            <rect
+              x="120"
+              y="145"
+              width="120"
+              height="12"
+              rx="3"
+              fill="currentColor"
+              fill-opacity="0.08"
+            />
+            <rect
+              x="120"
+              y="170"
+              width="140"
+              height="12"
+              rx="3"
+              fill="currentColor"
+              fill-opacity="0.08"
+            />
+            <rect
+              x="120"
+              y="195"
+              width="100"
+              height="12"
+              rx="3"
+              fill="currentColor"
+              fill-opacity="0.08"
+            />
+            <circle cx="200" cy="60" r="30" stroke-opacity="0.2" />
+            <path d="M190 60 L197 67 L210 53" stroke-opacity="0.4" stroke-width="2.5" />
+            <circle cx="80" cy="260" r="25" stroke-opacity="0.15" />
+            <circle cx="330" cy="240" r="18" stroke-opacity="0.12" />
+          </svg>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <!-- 右侧找回密码表单 -->
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1 data-i18n="password_reset.title">找回密码</h1>
+            <p data-i18n="password_reset.desc">我们将向您的注册邮箱发送重置链接</p>
+          </div>
+
+          <!-- Halo 内置密码重置表单 -->
+          <div th:replace="~{gateway_fragments/password_reset_email_send::form}"></div>
+
+          <div class="login-footer">
+            <p><a th:href="@{/login}" data-i18n="password_reset.back_to_login">← 返回登录</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>

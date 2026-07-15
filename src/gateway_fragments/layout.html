@@ -1,0 +1,56 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:lang="${#locale.toLanguageTag}"
+  th:data-primary-color="${theme.config?.basic?.primary_color}"
+  th:fragment="layout (title,head,body)"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${title}"></title>
+    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
+
+    <!-- Halo 内置基础资源（包含 RSA 加密、TOTP 等 JS） -->
+    <th:block th:replace="~{gateway_fragments/common::basicStaticResources}"></th:block>
+
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <link
+      rel="stylesheet"
+      href="//npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css"
+      media="print"
+      onload="this.media = 'all'"
+    />
+
+    <!-- 自定义 head 内容 -->
+    <th:block th:if="${head != null}">
+      <th:block th:replace="${head}" />
+    </th:block>
+
+    <script>
+      var primaryColor = document.documentElement.getAttribute("data-primary-color");
+      if (primaryColor) {
+        document.documentElement.style.setProperty("--color-primary", primaryColor);
+      }
+      (function () {
+        var s = localStorage.getItem("ShaneYu-theme");
+        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
+        if (s) {
+          document.documentElement.setAttribute("data-theme", s);
+        } else if (c === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else if (c === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+  </head>
+  <body class="login-body">
+    <th:block th:replace="${body}" />
+    <script type="module" src="../js/i18n.ts"></script>
+  </body>
+</html>

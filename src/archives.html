@@ -9,7 +9,7 @@
     th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
   >
     <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
-      <include src="sidebar.html"></include>
+      <include src="partials/sidebar.html"></include>
     </th:block>
 
     <div class="content-area">

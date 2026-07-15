@@ -1,0 +1,81 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{gateway_fragments/layout :: layout(title = |退出登录 - ${site.title}|, head = ~{::head}, body = ~{::body})}"
+>
+  <th:block th:fragment="body">
+    <div class="login-container">
+      <!-- 左侧品牌区域 -->
+      <div class="login-left">
+        <div class="login-brand">
+          <a th:href="@{/}">
+            <img
+              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
+              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
+              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
+              alt="Logo"
+            />
+            <div class="brand-text">
+              <span
+                class="brand-name"
+                th:text="${theme.config?.basic?.logo_text ?: site.title}"
+              ></span>
+              <span
+                class="brand-tagline"
+                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
+              ></span>
+            </div>
+          </a>
+        </div>
+        <div class="login-illustration">
+          <svg viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="120" y="80" width="160" height="140" rx="12" stroke-opacity="0.3" />
+            <path d="M170 130 L200 100 L230 130" stroke-opacity="0.5" stroke-width="2" />
+            <line x1="200" y1="100" x2="200" y2="170" stroke-opacity="0.4" stroke-width="2" />
+            <circle cx="200" cy="190" r="8" fill="currentColor" fill-opacity="0.2" />
+            <path d="M140 230 Q200 260 260 230" stroke-opacity="0.2" stroke-width="1.5" />
+            <circle cx="90" cy="250" r="22" stroke-opacity="0.15" />
+            <circle cx="320" cy="240" r="16" stroke-opacity="0.12" />
+          </svg>
+        </div>
+        <div class="login-slogan">
+          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
+        </div>
+      </div>
+
+      <!-- 右侧退出登录表单 -->
+      <div class="login-right">
+        <div class="login-form-wrap">
+          <div class="login-header">
+            <h1>退出登录</h1>
+            <p>您确定要退出当前账户吗？</p>
+          </div>
+
+          <!-- 用户信息卡片 -->
+          <div class="logout-user-card" th:object="${user}">
+            <img
+              th:if="*{spec.avatar}"
+              th:src="*{spec.avatar}"
+              class="logout-avatar"
+              alt="avatar"
+            />
+            <div class="logout-user-info">
+              <span class="logout-label">当前用户</span>
+              <span
+                class="logout-username"
+                th:text="|*{spec.displayName} (@*{metadata.name})|"
+              ></span>
+            </div>
+          </div>
+
+          <!-- Halo 内置退出登录表单 -->
+          <form th:replace="~{gateway_fragments/logout::form}" class="halo-form logout-form"></form>
+
+          <div class="login-footer">
+            <p><a th:href="@{/}">← 返回站点</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</html>
