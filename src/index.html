@@ -8,12 +8,12 @@
   <div class="layout-grid sidebar-left">
     <include src="partials/sidebar.html"></include>
     <div class="content-area">
-      <h2 class="section-title">最新文章</h2>
+      <h2 class="section-title" data-i18n="index.latest_posts">最新文章</h2>
       <div class="article-list" th:if="${not #lists.isEmpty(posts.items)}">
         <include src="partials/post-card.html" th:with="posts=${posts}"></include>
       </div>
       <div class="empty-state" th:if="${#lists.isEmpty(posts.items)}">
-        <p>暂无文章，敬请期待</p>
+        <p data-i18n="index.empty">暂无文章，敬请期待</p>
       </div>
       <include src="partials/pagination.html"></include>
     </div>

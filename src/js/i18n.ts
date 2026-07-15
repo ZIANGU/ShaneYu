@@ -87,6 +87,8 @@ const translations = {
     "search.no_results": "未找到相关文章",
     "search.no_results_hint": "试试更换关键词，或者浏览分类和标签",
     "search.initial": "输入关键词开始搜索",
+    "index.latest_posts": "最新文章",
+    "index.empty": "暂无文章，敬请期待",
   },
   "zh-TW": {
     "nav.home": "首頁",
@@ -175,6 +177,8 @@ const translations = {
     "search.no_results": "未找到相關文章",
     "search.no_results_hint": "試試更換關鍵詞，或者瀏覽分類和標籤",
     "search.initial": "輸入關鍵詞開始搜索",
+    "index.latest_posts": "最新文章",
+    "index.empty": "暫無文章，敬請期待",
   },
   en: {
     "nav.home": "Home",
@@ -263,6 +267,8 @@ const translations = {
     "search.no_results": "No matching articles found",
     "search.no_results_hint": "Try different keywords, or browse categories and tags",
     "search.initial": "Enter a keyword to start searching",
+    "index.latest_posts": "Latest Posts",
+    "index.empty": "No posts yet, stay tuned",
   },
   es: {
     "nav.home": "Inicio",
@@ -352,6 +358,8 @@ const translations = {
     "search.no_results": "No se encontraron artículos",
     "search.no_results_hint": "Intenta con otras palabras clave, o explora categorías y etiquetas",
     "search.initial": "Ingresa una palabra clave para comenzar",
+    "index.latest_posts": "Últimas Publicaciones",
+    "index.empty": "Aún no hay publicaciones, mantente atento",
   },
 };
 
