@@ -45,7 +45,7 @@ async function loadMomentCommentCounts() {
     if (!momentName) continue;
     try {
       var res = await fetch(
-        "/apis/api.halo.run/v1alpha1/comments?group=moments.halo.run&kind=Moment&name=" +
+        "/apis/api.halo.run/v1alpha1/comments?group=moment.halo.run&kind=Moment&name=" +
           momentName +
           "&pageSize=0&page=0",
       );
@@ -87,8 +87,14 @@ async function handleMomentLike(btn: HTMLElement) {
   const momentName = btn.getAttribute("data-moment-name");
   if (!momentName) return;
 
-  // 已点赞过，跳过
   if (isMomentUpvoted(momentName)) return;
+
+  btn.classList.add("liked");
+  const countEl = btn.querySelector(".like-count");
+  const originalCount = parseInt(countEl?.textContent || "0") || 0;
+  if (countEl) {
+    countEl.textContent = String(originalCount + 1);
+  }
 
   try {
     const xhr = new XMLHttpRequest();
@@ -97,25 +103,33 @@ async function handleMomentLike(btn: HTMLElement) {
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         markMomentUpvoted(momentName);
-        btn.classList.add("liked");
-        const countEl = btn.querySelector(".like-count");
+      } else {
+        btn.classList.remove("liked");
         if (countEl) {
-          const currentCount = parseInt(countEl.textContent || "0") || 0;
-          countEl.textContent = String(currentCount + 1);
+          countEl.textContent = String(originalCount);
         }
+        console.error("点赞请求失败:", xhr.status);
       }
     };
     xhr.onerror = function () {
+      btn.classList.remove("liked");
+      if (countEl) {
+        countEl.textContent = String(originalCount);
+      }
       console.error("点赞请求失败");
     };
     xhr.send(
       JSON.stringify({
-        group: "moments.halo.run",
+        group: "moment.halo.run",
         plural: "moments",
         name: momentName,
       }),
     );
   } catch (error) {
+    btn.classList.remove("liked");
+    if (countEl) {
+      countEl.textContent = String(originalCount);
+    }
     console.error("点赞失败:", error);
   }
 }
@@ -130,11 +144,6 @@ function restoreUpvoteState() {
     ) as HTMLElement | null;
     if (btn) {
       btn.classList.add("liked");
-      var countEl = btn.querySelector(".like-count");
-      if (countEl) {
-        var currentCount = parseInt(countEl.textContent || "0") || 0;
-        countEl.textContent = String(currentCount + 1);
-      }
     }
   });
 }

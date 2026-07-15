@@ -6,14 +6,14 @@ spec:
   displayName: ShaneYu
   author:
     name: ShaneYu
-    website: https://blog.guzian.cn:19527/
+    website: https://github.com/ziangu/ShaneYu
   description: 源于禹州，面向世界。Shane Yu是一款为开发者打造的现代博客主题，关于专注与极致的分享空间，摒弃繁杂，回归本质。
   logo: /themes/theme-ShaneYu/assets/images/logo.png
   homepage: https://github.com/ziangu/ShaneYu
   repo: https://github.com/ziangu/ShaneYu
   settingName: "ShaneYu-setting"
   configMapName: "ShaneYu-configMap"
-  version: 0.5.52
+  version: 0.5.55
   requires: ">=2.20.0"
   issues: https://github.com/ziangu/ShaneYu/issues
   license:
