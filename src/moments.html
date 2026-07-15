@@ -1,0 +1,222 @@
+<include src="layout.html">
+  <template name="head">
+    <title th:text="|瞬间 - ${site.title}|">瞬间</title>
+    <link rel="stylesheet" href="./css/moments.css" />
+    <script type="module" src="./js/moments.ts"></script>
+  </template>
+
+  <div
+    class="layout-grid sidebar-left"
+    th:classappend="${theme.config?.sidebar?.show_sidebar == false ? ' no-sidebar' : ''}"
+  >
+    <th:block th:if="${theme.config?.sidebar?.show_sidebar != false}">
+      <include src="partials/sidebar.html"></include>
+    </th:block>
+
+    <div class="content-area">
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div class="page-header-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </div>
+          <div class="page-header-content">
+            <h1 class="page-title" data-i18n="moments.title">瞬间</h1>
+            <p class="page-desc" data-i18n="moments.desc">记录生活中的点滴灵感与碎碎念</p>
+          </div>
+          <div class="page-header-stats">
+            <div class="stat-item">
+              <span class="stat-value" th:text="${moments?.total ?: 0}"></span>
+              <span class="stat-label" data-i18n="moments.count">条瞬间</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 瞬间列表 -->
+      <div class="moments-list" th:if="${not #lists.isEmpty(moments?.items)}">
+        <div class="moment-item" th:each="moment : ${moments.items}">
+          <!-- 头像与时间线 -->
+          <div class="moment-timeline">
+            <div class="moment-avatar">
+              <img
+                th:if="${moment.owner?.avatar != null}"
+                th:src="${moment.owner.avatar}"
+                alt=""
+                loading="lazy"
+              />
+              <span th:unless="${moment.owner?.avatar != null}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+            </div>
+            <div class="moment-line"></div>
+          </div>
+
+          <!-- 内容卡片 -->
+          <div class="moment-card">
+            <!-- 作者信息 -->
+            <div class="moment-header">
+              <span class="moment-author" th:text="${moment.owner?.displayName ?: '匿名'}"></span>
+              <time
+                class="moment-time"
+                th:text="${moment.metadata?.creationTimestamp != null ? #temporals.format(moment.metadata.creationTimestamp, 'yyyy-MM-dd HH:mm') : ''}"
+              ></time>
+            </div>
+
+            <!-- 正文内容 -->
+            <div
+              class="moment-content"
+              th:utext="${moment.spec?.content?.html}"
+              th:if="${moment.spec?.content?.html != null and !#strings.isEmpty(moment.spec.content.html)}"
+            ></div>
+
+            <!-- 媒体内容 -->
+            <div
+              class="moment-media"
+              th:if="${moment.spec?.content?.medium != null and not #lists.isEmpty(moment.spec.content.medium)}"
+              th:with="mediaList=${moment.spec.content.medium}"
+            >
+              <div class="moment-media-grid">
+                <div th:each="media : ${mediaList}" class="moment-media-wrapper">
+                  <!-- 图片 -->
+                  <div
+                    th:if="${media.type?.name() == 'PHOTO' or media.type == 'PHOTO' or media.type == null}"
+                    class="moment-media-item moment-media-photo"
+                    th:data-src="${media.url}"
+                    onclick="openLightbox(this)"
+                  >
+                    <img th:src="${media.url}" alt="" loading="lazy" />
+                  </div>
+                  <!-- 视频 -->
+                  <div
+                    th:if="${media.type?.name() == 'VIDEO' or media.type == 'VIDEO'}"
+                    class="moment-media-item moment-media-video"
+                  >
+                    <video
+                      controls
+                      preload="metadata"
+                      controlslist="nodownload noplaybackrate nopictureinpicture nofullscreen"
+                      disablepictureinpicture
+                      th:src="${media.url}"
+                    ></video>
+                  </div>
+                  <!-- 音频 -->
+                  <div
+                    th:if="${media.type?.name() == 'AUDIO' or media.type == 'AUDIO'}"
+                    class="moment-media-item moment-media-audio"
+                  >
+                    <audio
+                      controls
+                      preload="metadata"
+                      controlslist="nodownload noplaybackrate"
+                      th:src="${media.url}"
+                    ></audio>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 互动栏 -->
+            <div class="moment-actions">
+              <button
+                class="moment-action-btn"
+                th:data-moment-name="${moment.metadata?.name}"
+                onclick="handleMomentLike(this)"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  />
+                </svg>
+                <span
+                  class="like-count"
+                  th:text="${moment.stats != null ? moment.stats.upvote : 0}"
+                ></span>
+              </button>
+              <button
+                th:if="${haloCommentEnabled}"
+                class="moment-action-btn moment-comment-btn"
+                th:data-moment-name="${moment.metadata?.name}"
+                onclick="toggleMomentComment(this)"
+                title="评论"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+                <span class="comment-count" th:data-moment-name="${moment.metadata?.name}">0</span>
+              </button>
+            </div>
+
+            <!-- 评论区 -->
+            <div class="moment-comment-section" th:if="${haloCommentEnabled}" style="display: none">
+              <halo:comment
+                group="moments.halo.run"
+                kind="Moment"
+                th:attr="name=${moment.metadata.name}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 空状态 -->
+      <div class="empty-state" th:if="${#lists.isEmpty(moments?.items)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        <p data-i18n="moments.empty">暂无瞬间</p>
+      </div>
+
+      <!-- 分页 -->
+      <nav
+        class="pagination"
+        th:if="${moments?.hasPrevious() != null and (moments.hasPrevious() || moments.hasNext())}"
+      >
+        <a th:if="${moments.hasPrevious()}" th:href="@{${moments.prevUrl}}">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </a>
+        <span class="current" th:text="${moments.page}"></span>
+        <span
+          style="border: none; background: none; color: var(--color-text-muted)"
+          th:text="'/' + ${moments.totalPages}"
+        ></span>
+        <a th:if="${moments.hasNext()}" th:href="@{${moments.nextUrl}}">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            style="width: 16px; height: 16px"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- 图片预览 Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="" />
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</include>

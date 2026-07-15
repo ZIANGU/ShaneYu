@@ -13,7 +13,7 @@ spec:
   repo: https://github.com/ziangu/ShaneYu
   settingName: "ShaneYu-setting"
   configMapName: "ShaneYu-configMap"
-  version: 0.5.26
+  version: 0.5.52
   requires: ">=2.20.0"
   issues: https://github.com/ziangu/ShaneYu/issues
   license:

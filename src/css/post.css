@@ -101,6 +101,23 @@
   animation: upvotePop 0.4s ease;
 }
 
+/* 评论按钮激活状态 */
+.action-comment.active {
+  color: #fff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+/* 壁纸模式下评论区半透明 */
+body.has-wallpaper #commentSection {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 20px;
+}
+
 @keyframes upvotePop {
   0% {
     transform: scale(1);

@@ -204,22 +204,21 @@ import "../css/main.css";
     });
   }
 
-  // ----- 评论区滚动 -----
+  // ----- 评论区切换 -----
   var commentBtn = document.getElementById("commentBtn");
-  if (commentBtn) {
+  var commentSection = document.getElementById("commentSection");
+  if (commentBtn && commentSection) {
     commentBtn.addEventListener("click", function () {
-      var commentSection = document.querySelector(
-        "halo-comment-widget, .halo-comment-widget, halo\\:comment, [data-comment]",
-      ) as HTMLElement | null;
-      if (commentSection) {
-        var targetPos = commentSection.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: targetPos, behavior: "smooth" });
-      } else {
-        var article = document.querySelector(".article-detail, .content-area");
-        if (article) {
-          var pos = (article as HTMLElement).getBoundingClientRect().bottom + window.scrollY - 80;
-          window.scrollTo({ top: pos, behavior: "smooth" });
-        }
+      var isHidden =
+        commentSection!.style.display === "none" || commentSection!.style.display === "";
+      commentSection!.style.display = isHidden ? "block" : "none";
+      commentBtn!.classList.toggle("active", isHidden);
+      if (isHidden) {
+        // 展开后滚动到评论区
+        setTimeout(function () {
+          var targetPos = commentSection!.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: targetPos, behavior: "smooth" });
+        }, 100);
       }
     });
   }

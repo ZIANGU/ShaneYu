@@ -1,0 +1,459 @@
+/* ============================================
+   瞬间页面样式
+   ============================================ */
+
+/* 瞬间列表 */
+.moments-list {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* 单条瞬间 */
+.moment-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+/* 时间线区域 */
+.moment-timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.moment-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.moment-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment-avatar svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+}
+
+.moment-line {
+  width: 2px;
+  flex: 1;
+  background: var(--color-border);
+  margin-top: 8px;
+  min-height: 40px;
+}
+
+.moment-item:last-child .moment-line {
+  display: none;
+}
+
+/* 内容卡片 */
+.moment-card {
+  flex: 1;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  transition: all var(--transition);
+  min-width: 0;
+}
+
+.moment-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* 壁纸模式下半透明效果 */
+body.has-wallpaper .moment-card {
+  background: color-mix(in srgb, var(--color-card) 75%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* 作者信息 */
+.moment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.moment-author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.moment-time {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* 正文内容 */
+.moment-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  word-break: break-word;
+}
+
+.moment-content p {
+  margin: 0 0 8px 0;
+}
+
+.moment-content p:last-child {
+  margin-bottom: 0;
+}
+
+.moment-content a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.moment-content a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.moment-content code {
+  background: var(--color-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.moment-content pre {
+  background: var(--color-bg);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.moment-content blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 12px;
+  margin: 8px 0;
+  color: var(--color-text-muted);
+}
+
+/* 媒体内容 */
+.moment-media {
+  margin-top: 12px;
+}
+
+.moment-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.moment-media-wrapper {
+  display: flex;
+}
+
+/* 视频/音频 wrapper 占满整行，不受 3 列网格限制 */
+.moment-media-wrapper:has(.moment-media-video),
+.moment-media-wrapper:has(.moment-media-audio) {
+  grid-column: 1 / -1;
+}
+
+.moment-media-item {
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg);
+  transition: transform var(--transition);
+  width: 100%;
+}
+
+.moment-media-item:hover {
+  transform: scale(1.02);
+}
+
+/* 图片 */
+.moment-media-photo {
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.moment-media-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 视频 */
+.moment-media-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.moment-media-video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+/* 隐藏视频全屏按钮（浏览器兼容） */
+.moment-media-video video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
+.moment-media-video video::backdrop {
+  display: none !important;
+}
+
+/* 音频 */
+.moment-media-audio {
+  width: 100%;
+  padding: 8px 0;
+}
+
+.moment-media-audio audio {
+  width: 100%;
+  height: 44px;
+}
+
+/* Lightbox 图片预览 */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.lightbox-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 互动栏 */
+.moment-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.moment-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.moment-action-btn:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.moment-action-btn.liked {
+  color: #ef4444;
+}
+
+.moment-action-btn.liked svg {
+  fill: #ef4444;
+  stroke: #ef4444;
+}
+
+/* 评论按钮激活状态 */
+.moment-comment-btn.active {
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.moment-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* 瞬间评论区 */
+.moment-comment-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* 壁纸模式下评论区半透明 */
+body.has-wallpaper .moment-comment-section {
+  background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  border-top: none;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-text-muted);
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+  padding-bottom: 20px;
+}
+
+.pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.pagination a:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.pagination .current {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .moment-item {
+    gap: 12px;
+  }
+
+  .moment-timeline {
+    width: 32px;
+  }
+
+  .moment-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .moment-avatar svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .moment-card {
+    padding: 12px 16px;
+  }
+
+  .moment-media-audio {
+    padding: 12px 0;
+  }
+
+  .moment-media-audio audio {
+    height: 48px;
+  }
+}

@@ -89,6 +89,10 @@ const translations = {
     "search.initial": "输入关键词开始搜索",
     "index.latest_posts": "最新文章",
     "index.empty": "暂无文章，敬请期待",
+    "moments.title": "瞬间",
+    "moments.desc": "记录生活中的点滴灵感与碎碎念",
+    "moments.count": "条瞬间",
+    "moments.empty": "暂无瞬间",
   },
   "zh-TW": {
     "nav.home": "首頁",
@@ -179,6 +183,10 @@ const translations = {
     "search.initial": "輸入關鍵詞開始搜索",
     "index.latest_posts": "最新文章",
     "index.empty": "暫無文章，敬請期待",
+    "moments.title": "瞬間",
+    "moments.desc": "記錄生活中的點滴靈感與碎碎念",
+    "moments.count": "條瞬間",
+    "moments.empty": "暫無瞬間",
   },
   en: {
     "nav.home": "Home",
@@ -269,6 +277,10 @@ const translations = {
     "search.initial": "Enter a keyword to start searching",
     "index.latest_posts": "Latest Posts",
     "index.empty": "No posts yet, stay tuned",
+    "moments.title": "Moments",
+    "moments.desc": "Capturing life's little inspirations and thoughts",
+    "moments.count": "moments",
+    "moments.empty": "No moments yet",
   },
   es: {
     "nav.home": "Inicio",
@@ -360,6 +372,10 @@ const translations = {
     "search.initial": "Ingresa una palabra clave para comenzar",
     "index.latest_posts": "Últimas Publicaciones",
     "index.empty": "Aún no hay publicaciones, mantente atento",
+    "moments.title": "Momentos",
+    "moments.desc": "Capturando las pequeñas inspiraciones y pensamientos de la vida",
+    "moments.count": "momentos",
+    "moments.empty": "Aún no hay momentos",
   },
 };
 

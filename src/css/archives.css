@@ -211,6 +211,14 @@
     justify-content: center;
   }
 
+  .archive-month-group.side-left {
+    padding-right: calc(50% + 16px);
+  }
+
+  .archive-month-group.side-right {
+    padding-left: calc(50% + 16px);
+  }
+
   .archive-month-card {
     max-width: 85%;
   }
@@ -231,6 +239,16 @@
   .archive-month-group.side-right {
     flex-direction: row;
     justify-content: flex-start;
+  }
+
+  .archive-month-group.side-left .archive-month-connector {
+    right: calc(50% - 8px);
+    width: 16px;
+  }
+
+  .archive-month-group.side-right .archive-month-connector {
+    left: calc(50% - 8px);
+    width: 16px;
   }
 }
 
@@ -259,9 +277,9 @@
   .archive-year-badge::before {
     content: "";
     position: absolute;
-    left: -36px;
+    left: -30px;
     top: 50%;
-    width: 28px;
+    width: 6px;
     height: 2px;
     background: var(--color-border);
     transform: translateY(-50%);
@@ -286,9 +304,9 @@
 
   .archive-month-connector {
     position: absolute;
-    left: 16px;
+    left: 22px;
     top: 10px;
-    width: 12px;
+    width: 6px;
     height: 2px;
     transform: none;
   }
@@ -300,7 +318,7 @@
 
   .archive-month-dot {
     position: absolute;
-    left: 10px;
+    left: 22px;
     top: 6px;
     transform: none;
   }
