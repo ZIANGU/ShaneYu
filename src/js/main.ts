@@ -95,11 +95,62 @@ import "./i18n";
     headerNav?.classList.toggle("open");
   });
 
-  headerNav?.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", function () {
+  headerNav
+    ?.querySelectorAll(":scope > .nav-item > a:not(.nav-dropdown-trigger)")
+    .forEach(function (link) {
+      link.addEventListener("click", function () {
+        menuToggle?.classList.remove("active");
+        headerNav.classList.remove("open");
+      });
+    });
+
+  // ===== 导航下拉菜单（双击模式，支持无限层级） =====
+  // 第一次点击：展开子菜单（阻止导航）
+  // 第二次点击：已展开时允许导航跳转
+
+  headerNav?.addEventListener("click", function (e) {
+    const trigger = (e.target as Element)?.closest(".nav-dropdown-trigger");
+    if (!trigger || !headerNav.contains(trigger)) return;
+    const dropdown = trigger.closest(".nav-dropdown") as HTMLElement;
+    if (!dropdown) return;
+
+    if (dropdown.classList.contains("open")) {
+      // 已展开 → 允许导航跳转（不阻止默认行为）
+      // 关闭所有下拉菜单
+      headerNav.querySelectorAll(".nav-dropdown.open").forEach(function (d) {
+        d.classList.remove("open");
+      });
+      // 移动端：关闭移动菜单
       menuToggle?.classList.remove("active");
       headerNav.classList.remove("open");
-    });
+    } else {
+      // 未展开 → 展开子菜单，阻止导航
+      e.preventDefault();
+      e.stopPropagation();
+      // 关闭同级其他已展开的下拉菜单
+      const parent = dropdown.parentElement;
+      if (parent) {
+        parent.querySelectorAll(":scope > .nav-dropdown.open").forEach(function (sibling) {
+          if (sibling !== dropdown) {
+            sibling.classList.remove("open");
+            sibling.querySelectorAll(".nav-dropdown.open").forEach(function (inner) {
+              inner.classList.remove("open");
+            });
+          }
+        });
+      }
+      dropdown.classList.add("open");
+    }
+  });
+
+  // 点击下拉菜单外部时关闭所有
+  document.addEventListener("click", function (e) {
+    const target = e.target as Element | null;
+    if (!target || !target.closest(".nav-dropdown")) {
+      headerNav?.querySelectorAll(".nav-dropdown.open").forEach(function (dropdown) {
+        dropdown.classList.remove("open");
+      });
+    }
   });
 
   // ===== 搜索快捷键 (Ctrl+K) =====
