@@ -349,6 +349,7 @@ body.has-wallpaper #commentSection {
   border-radius: var(--radius-lg);
   padding: 40px;
   box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
 }
 
 .article-detail-header {
@@ -590,6 +591,43 @@ body.has-wallpaper #commentSection {
 }
 
 .floating-backtop svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 返回按钮 */
+.floating-back {
+  position: fixed;
+  right: 24px;
+  bottom: 140px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+  z-index: 100;
+}
+
+.floating-back:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  box-shadow: var(--shadow-hover);
+  transform: translateX(-3px);
+}
+
+.floating-back svg {
   width: 20px;
   height: 20px;
 }
@@ -847,6 +885,18 @@ div#shareMenu .share-item img {
 
   .article-detail-title {
     font-size: 24px;
+  }
+
+  .floating-back {
+    right: 12px;
+    bottom: 130px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .floating-back svg {
+    width: 18px;
+    height: 18px;
   }
 }
 

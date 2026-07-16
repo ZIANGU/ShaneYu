@@ -9,7 +9,7 @@
 
 .site-main {
   flex: 1;
-  padding-bottom: 80px;
+  padding-bottom: 120px;
 }
 
 body:not(.has-wallpaper) .site-main {

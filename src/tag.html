@@ -59,12 +59,9 @@
             <a
               class="article-thumb"
               th:href="@{${post.status.permalink}}"
-              th:with="builtinCover = @{/assets/images/default_post_cover.png}, coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
+              th:with="builtinCover = '/themes/theme-ShaneYu/assets/images/default_post.png', coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
             >
-              <img th:if="${coverUrl != null}" th:src="${coverUrl}" alt="" loading="lazy" />
-              <span class="article-thumb-placeholder" th:unless="${coverUrl != null}"
-                >&lt;/&gt;</span
-              >
+              <img th:src="${coverUrl}" alt="" loading="lazy" />
             </a>
             <div class="article-body">
               <h3 class="article-card-title">

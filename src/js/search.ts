@@ -119,18 +119,14 @@
           article.className = "search-result-item";
           article.href = "/archives/" + slug;
 
-          let thumbHtml = "";
-          if (cover) {
-            thumbHtml =
-              '<div class="result-thumb"><img src="' +
-              cover +
-              '" alt="' +
-              title +
-              '" loading="lazy" /></div>';
-          } else {
-            thumbHtml =
-              '<div class="result-thumb"><span class="result-thumb-placeholder">&lt;/&gt;</span></div>';
-          }
+          const defaultCover = "/themes/theme-ShaneYu/assets/images/default_post.png";
+          const thumbSrc = cover || defaultCover;
+          const thumbHtml =
+            '<div class="result-thumb"><img src="' +
+            thumbSrc +
+            '" alt="' +
+            title +
+            '" loading="lazy" /></div>';
 
           let categoriesHtml = "";
           categories.forEach(function (cat) {

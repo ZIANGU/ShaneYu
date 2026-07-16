@@ -2,9 +2,12 @@
   <template name="head">
     <title th:text="|${singlePage.spec.title} - ${site.title}|">页面标题</title>
     <link rel="stylesheet" href="./css/page.css" />
+    <link rel="stylesheet" href="./css/post.css" />
+    <script type="module" src="./js/post.ts"></script>
   </template>
 
-  <div class="layout-grid no-sidebar">
+  <div class="layout-grid sidebar-left">
+    <include src="partials/sidebar.html"></include>
     <div class="content-area">
       <article class="article-detail">
         <header class="article-detail-header">

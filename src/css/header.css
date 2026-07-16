@@ -542,13 +542,18 @@
     padding: 6px 10px;
   }
 
-  .header-nav a span {
+  .header-nav > .nav-item > a span {
     display: none;
   }
 
   .header-nav a svg {
     width: 18px;
     height: 18px;
+  }
+
+  /* 子菜单展开时显示文字 */
+  .header-nav .nav-sub-dropdown a span {
+    display: inline !important;
   }
 
   .search-box {

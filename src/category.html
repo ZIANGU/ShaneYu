@@ -56,16 +56,10 @@
           <article class="article-card">
             <a class="article-thumb" th:href="@{${post.status.permalink}}">
               <img
-                th:if="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
-                th:src="${post.spec.cover}"
+                th:src="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : '/themes/theme-ShaneYu/assets/images/default_post.png'}"
                 alt=""
                 loading="lazy"
               />
-              <span
-                class="article-thumb-placeholder"
-                th:unless="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
-                >&lt;/&gt;</span
-              >
             </a>
             <div class="article-body">
               <h3 class="article-card-title">

@@ -20,6 +20,15 @@ if [ -f "$BUILD_NUMBER_FILE" ]; then
   BUILD_NUMBER=$(cat "$BUILD_NUMBER_FILE")
 fi
 BUILD_NUMBER=$((BUILD_NUMBER + 1))
+
+# 当构建次数达到35次时，minor版本加1，构建次数重置为0
+MAX_BUILD=35
+if [ "$BUILD_NUMBER" -ge "$MAX_BUILD" ]; then
+  MINOR=$((MINOR + 1))
+  BUILD_NUMBER=0
+  echo "🔄 Build limit reached ($MAX_BUILD), incrementing minor version: $MAJOR.$((MINOR - 1)).x -> $MAJOR.$MINOR.0"
+fi
+
 echo "$BUILD_NUMBER" > "$BUILD_NUMBER_FILE"
 
 NEW_VERSION="${MAJOR}.${MINOR}.${BUILD_NUMBER}"

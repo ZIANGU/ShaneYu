@@ -212,16 +212,10 @@
       >
         <div class="recent-post-thumb">
           <img
-            th:if="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
-            th:src="${post.spec.cover}"
+            th:src="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : '/themes/theme-ShaneYu/assets/images/default_post.png'}"
             alt=""
             loading="lazy"
           />
-          <span
-            class="recent-post-thumb-placeholder"
-            th:unless="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover)}"
-            >&lt;/&gt;</span
-          >
         </div>
         <div class="recent-post-info">
           <span class="recent-post-title" th:text="${post.spec.title}"></span>

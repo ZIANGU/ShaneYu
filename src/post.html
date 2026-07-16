@@ -30,10 +30,23 @@
       </svg>
     </button>
 
+    <!-- Floating Back Button -->
+    <button
+      class="floating-back"
+      id="backBtn"
+      data-i18n-title="post.back"
+      title="返回上一页"
+      onclick="history.back()"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </button>
+
     <div class="content-area">
       <article
         class="article-detail"
-        th:with="builtinCover = @{/assets/images/default_post_cover.png}, coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
+        th:with="builtinCover = '/themes/theme-ShaneYu/assets/images/default_post.png', coverUrl = ${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : builtinCover}"
       >
         <!-- Cover -->
         <div class="article-detail-cover" th:if="${coverUrl != null}">

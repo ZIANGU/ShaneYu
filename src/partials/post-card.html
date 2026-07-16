@@ -11,8 +11,11 @@
     th:target="${isExternal ? '_blank' : '_self'}"
     th:rel="${isExternal ? 'noopener' : ''}"
   >
-    <img th:if="${post.spec.cover}" th:src="${post.spec.cover}" alt="" loading="lazy" />
-    <span class="article-thumb-placeholder" th:unless="${post.spec.cover}">&lt;/&gt;</span>
+    <img
+      th:src="${post.spec.cover != null and !#strings.isEmpty(post.spec.cover) ? post.spec.cover : '/themes/theme-ShaneYu/assets/images/default_post.png'}"
+      alt=""
+      loading="lazy"
+    />
   </a>
 
   <!-- Body -->
