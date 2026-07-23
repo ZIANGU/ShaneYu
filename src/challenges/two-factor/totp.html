@@ -3,91 +3,29 @@
   xmlns:th="http://www.thymeleaf.org"
   th:replace="~{gateway_fragments/layout :: layout(title = |两步验证 - ${site.title}|, head = ~{::head}, body = ~{::body})}"
 >
+  <th:block th:fragment="head">
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("two-factor-form");
+        const codeInput = document.getElementById("code");
+        let submitting = false;
+
+        codeInput.addEventListener("input", function (event) {
+          if (submitting || event.isComposing) {
+            return;
+          }
+          if (/^\d{6}$/.test(codeInput.value)) {
+            submitting = true;
+            form.requestSubmit();
+          }
+        });
+      });
+    </script>
+  </th:block>
+
   <th:block th:fragment="body">
     <div class="login-container">
       <!-- 左侧品牌区域 -->
-      <div class="login-left">
-        <div class="login-brand">
-          <a th:href="@{/}">
-            <img
-              th:src="${theme.config?.basic?.logo_image != null and !#strings.isEmpty(theme.config?.basic?.logo_image) ? theme.config.basic.logo_image : '/themes/theme-ShaneYu/assets/images/logo.png'}"
-              th:width="${theme.config?.basic?.logo_image_size ?: 48}"
-              th:height="${theme.config?.basic?.logo_image_size ?: 48}"
-              alt="Logo"
-            />
-            <div class="brand-text">
-              <span
-                class="brand-name"
-                th:text="${theme.config?.basic?.logo_text ?: site.title}"
-              ></span>
-              <span
-                class="brand-tagline"
-                th:text="${theme.config?.basic?.tagline ?: site.subtitle}"
-              ></span>
-            </div>
-          </a>
-        </div>
-        <div class="login-slogan">
-          <p th:text="${theme.config?.basic?.tagline ?: '源于禹州，面向世界'}"></p>
-        </div>
-      </div>
-
-      <!-- 右侧 TOTP 验证表单 -->
-      <div class="login-right">
-        <div class="login-form-wrap">
-          <div class="login-header">
-            <h1>两步验证</h1>
-            <p>请输入验证器应用中的 6 位验证码</p>
-          </div>
-
-          <!-- Halo 内置 TOTP 表单 -->
-          <form th:replace="~{gateway_fragments/totp::form}"></form>
-        </div>
-      </div>
-    </div>
-  </th:block>
-</html>
-<!doctype html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  th:lang="${#locale.toLanguageTag}"
-  th:data-primary-color="${theme.config?.basic?.primary_color}"
->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:text="|两步验证 - ${site.title}|">两步验证</title>
-    <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="../../css/login.css" />
-    <link
-      rel="stylesheet"
-      href="//npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <link rel="icon" th:if="${site.favicon}" th:href="${site.favicon}" />
-    <script>
-      var primaryColor = document.documentElement.getAttribute("data-primary-color");
-      if (primaryColor) {
-        document.documentElement.style.setProperty("--color-primary", primaryColor);
-      }
-      (function () {
-        var s = localStorage.getItem("ShaneYu-theme");
-        var c = '[[${theme.config?.basic?.color_scheme ?: "auto"}]]';
-        if (s) {
-          document.documentElement.setAttribute("data-theme", s);
-        } else if (c === "dark") {
-          document.documentElement.setAttribute("data-theme", "dark");
-        } else if (c === "light") {
-          document.documentElement.setAttribute("data-theme", "light");
-        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme:dark)").matches) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      })();
-    </script>
-  </head>
-  <body class="login-body">
-    <div class="login-container">
       <div class="login-left">
         <div class="login-brand">
           <a th:href="@{/}">
@@ -124,6 +62,7 @@
         </div>
       </div>
 
+      <!-- 右侧 TOTP 验证表单 -->
       <div class="login-right">
         <div class="login-form-wrap">
           <div class="login-header">
@@ -181,29 +120,11 @@
 
           <div class="login-footer">
             <p>
-              <a th:href="@{/logout}">取消登录</a>
+              <a th:href="@{/login}">取消登录</a>
             </p>
           </div>
         </div>
       </div>
     </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("two-factor-form");
-        const codeInput = document.getElementById("code");
-        let submitting = false;
-
-        codeInput.addEventListener("input", function (event) {
-          if (submitting || event.isComposing) {
-            return;
-          }
-          if (/^\d{6}$/.test(codeInput.value)) {
-            submitting = true;
-            form.requestSubmit();
-          }
-        });
-      });
-    </script>
-  </body>
+  </th:block>
 </html>

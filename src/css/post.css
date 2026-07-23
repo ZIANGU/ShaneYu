@@ -883,8 +883,25 @@ div#shareMenu .share-item img {
     padding: 26px 22px;
   }
 
+  .article-detail-cover {
+    margin: -26px -22px 22px;
+    height: 280px;
+  }
+
   .article-detail-title {
     font-size: 24px;
+  }
+
+  .floating-backtop {
+    right: 12px;
+    bottom: 80px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .floating-backtop svg {
+    width: 18px;
+    height: 18px;
   }
 
   .floating-back {
