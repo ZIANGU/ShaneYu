@@ -18,6 +18,138 @@
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
 
     <script>
+      var pageAliases = {
+        // 标题
+        tags_title: {
+          "zh-CN": "[[${theme.config?.page_alias?.tags_title_zh_cn ?: '思想碎片'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.tags_title_zh_tw ?: '思想碎片'}]]",
+          en: "[[${theme.config?.page_alias?.tags_title_en ?: 'Tags'}]]",
+          es: "[[${theme.config?.page_alias?.tags_title_es ?: 'Etiquetas'}]]",
+        },
+        archives_title: {
+          "zh-CN": "[[${theme.config?.page_alias?.archives_title_zh_cn ?: '岁月痕迹'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.archives_title_zh_tw ?: '歲月痕跡'}]]",
+          en: "[[${theme.config?.page_alias?.archives_title_en ?: 'Traces of Time'}]]",
+          es: "[[${theme.config?.page_alias?.archives_title_es ?: 'Huellas del tiempo'}]]",
+        },
+        categories_title: {
+          "zh-CN": "[[${theme.config?.page_alias?.categories_title_zh_cn ?: '文字花园'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.categories_title_zh_tw ?: '文字花園'}]]",
+          en: "[[${theme.config?.page_alias?.categories_title_en ?: 'Categories'}]]",
+          es: "[[${theme.config?.page_alias?.categories_title_es ?: 'Categorías'}]]",
+        },
+        moments_title: {
+          "zh-CN": "[[${theme.config?.page_alias?.moments_title_zh_cn ?: '瞬间'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.moments_title_zh_tw ?: '瞬間'}]]",
+          en: "[[${theme.config?.page_alias?.moments_title_en ?: 'Moments'}]]",
+          es: "[[${theme.config?.page_alias?.moments_title_es ?: 'Momentos'}]]",
+        },
+        about_experience_title: {
+          "zh-CN": "[[${theme.config?.page_alias?.about_experience_title_zh_cn ?: '个人经历'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.about_experience_title_zh_tw ?: '個人經歷'}]]",
+          en: "[[${theme.config?.page_alias?.about_experience_title_en ?: 'Experience'}]]",
+          es: "[[${theme.config?.page_alias?.about_experience_title_es ?: 'Experiencia'}]]",
+        },
+        // 描述
+        tags_desc: {
+          "zh-CN":
+            "[[${theme.config?.page_alias?.tags_desc_zh_cn ?: '拾起散落的灵感碎片，拼凑出完整的思考图景'}]]",
+          "zh-TW":
+            "[[${theme.config?.page_alias?.tags_desc_zh_tw ?: '拾起散落的靈感碎片，拼湊出完整的思考圖景'}]]",
+          en: "[[${theme.config?.page_alias?.tags_desc_en ?: 'Collect scattered inspiration and piece together a complete picture of thought'}]]",
+          es: "[[${theme.config?.page_alias?.tags_desc_es ?: 'Recoge fragmentos de inspiración dispersos y construye una imagen completa del pensamiento'}]]",
+        },
+        archives_desc: {
+          "zh-CN":
+            "[[${theme.config?.page_alias?.archives_desc_zh_cn ?: '循着时光的足迹，重温每一篇文字'}]]",
+          "zh-TW":
+            "[[${theme.config?.page_alias?.archives_desc_zh_tw ?: '循著時光的足跡，重溫每一篇文字'}]]",
+          en: "[[${theme.config?.page_alias?.archives_desc_en ?: 'Follow the footsteps of time and revisit every article'}]]",
+          es: "[[${theme.config?.page_alias?.archives_desc_es ?: 'Sigue las huellas del tiempo y revisita cada artículo'}]]",
+        },
+        categories_desc: {
+          "zh-CN":
+            "[[${theme.config?.page_alias?.categories_desc_zh_cn ?: '漫步于主题之间，采撷每一朵思想的花'}]]",
+          "zh-TW":
+            "[[${theme.config?.page_alias?.categories_desc_zh_tw ?: '漫步於主題之間，採擷每一朵思想的花'}]]",
+          en: "[[${theme.config?.page_alias?.categories_desc_en ?: 'Wander through themes and gather every flower of thought'}]]",
+          es: "[[${theme.config?.page_alias?.categories_desc_es ?: 'Recorre los temas y recoge cada flor de pensamiento'}]]",
+        },
+        moments_desc: {
+          "zh-CN":
+            "[[${theme.config?.page_alias?.moments_desc_zh_cn ?: '记录生活中的点滴灵感与碎碎念'}]]",
+          "zh-TW":
+            "[[${theme.config?.page_alias?.moments_desc_zh_tw ?: '記錄生活中的點滴靈感與碎碎念'}]]",
+          en: "[[${theme.config?.page_alias?.moments_desc_en ?: 'Capturing life`s little inspirations and thoughts'}]]",
+          es: "[[${theme.config?.page_alias?.moments_desc_es ?: 'Capturando las pequeñas inspiraciones y pensamientos de la vida'}]]",
+        },
+        // 统计标签
+        tags_label: {
+          "zh-CN": "[[${theme.config?.page_alias?.tags_label_zh_cn ?: '碎片'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.tags_label_zh_tw ?: '碎片'}]]",
+          en: "[[${theme.config?.page_alias?.tags_label_en ?: 'Tags'}]]",
+          es: "[[${theme.config?.page_alias?.tags_label_es ?: 'Etiquetas'}]]",
+        },
+        archives_label: {
+          "zh-CN": "[[${theme.config?.page_alias?.archives_label_zh_cn ?: '痕迹'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.archives_label_zh_tw ?: '痕跡'}]]",
+          en: "[[${theme.config?.page_alias?.archives_label_en ?: 'Articles'}]]",
+          es: "[[${theme.config?.page_alias?.archives_label_es ?: 'Artículos'}]]",
+        },
+        categories_label: {
+          "zh-CN": "[[${theme.config?.page_alias?.categories_label_zh_cn ?: '花园'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.categories_label_zh_tw ?: '花園'}]]",
+          en: "[[${theme.config?.page_alias?.categories_label_en ?: 'Categories'}]]",
+          es: "[[${theme.config?.page_alias?.categories_label_es ?: 'Categorías'}]]",
+        },
+        moments_label: {
+          "zh-CN": "[[${theme.config?.page_alias?.moments_label_zh_cn ?: '条瞬间'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.moments_label_zh_tw ?: '條瞬間'}]]",
+          en: "[[${theme.config?.page_alias?.moments_label_en ?: 'moments'}]]",
+          es: "[[${theme.config?.page_alias?.moments_label_es ?: 'momentos'}]]",
+        },
+        // 暂无数据
+        tags_empty: {
+          "zh-CN": "[[${theme.config?.page_alias?.tags_empty_zh_cn ?: '暂无碎片'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.tags_empty_zh_tw ?: '暫無碎片'}]]",
+          en: "[[${theme.config?.page_alias?.tags_empty_en ?: 'No tags yet'}]]",
+          es: "[[${theme.config?.page_alias?.tags_empty_es ?: 'Aún no hay etiquetas'}]]",
+        },
+        archives_empty: {
+          "zh-CN": "[[${theme.config?.page_alias?.archives_empty_zh_cn ?: '暂无岁月痕迹'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.archives_empty_zh_tw ?: '暫無歲月痕跡'}]]",
+          en: "[[${theme.config?.page_alias?.archives_empty_en ?: 'No articles'}]]",
+          es: "[[${theme.config?.page_alias?.archives_empty_es ?: 'No hay artículos'}]]",
+        },
+        categories_empty: {
+          "zh-CN": "[[${theme.config?.page_alias?.categories_empty_zh_cn ?: '暂无花园'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.categories_empty_zh_tw ?: '暫無花園'}]]",
+          en: "[[${theme.config?.page_alias?.categories_empty_en ?: 'No categories'}]]",
+          es: "[[${theme.config?.page_alias?.categories_empty_es ?: 'No hay categorías'}]]",
+        },
+        moments_empty: {
+          "zh-CN": "[[${theme.config?.page_alias?.moments_empty_zh_cn ?: '暂无瞬间'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.moments_empty_zh_tw ?: '暫無瞬間'}]]",
+          en: "[[${theme.config?.page_alias?.moments_empty_en ?: 'No moments yet'}]]",
+          es: "[[${theme.config?.page_alias?.moments_empty_es ?: 'Aún no hay momentos'}]]",
+        },
+        // 侧边栏标题
+        sidebar_tag_cloud: {
+          "zh-CN": "[[${theme.config?.page_alias?.tags_title_zh_cn ?: '思想碎片'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.tags_title_zh_tw ?: '思想碎片'}]]",
+          en: "[[${theme.config?.page_alias?.tags_title_en ?: 'Tags'}]]",
+          es: "[[${theme.config?.page_alias?.tags_title_es ?: 'Etiquetas'}]]",
+        },
+        sidebar_categories: {
+          "zh-CN": "[[${theme.config?.page_alias?.categories_title_zh_cn ?: '文字花园'}]]",
+          "zh-TW": "[[${theme.config?.page_alias?.categories_title_zh_tw ?: '文字花園'}]]",
+          en: "[[${theme.config?.page_alias?.categories_title_en ?: 'Categories'}]]",
+          es: "[[${theme.config?.page_alias?.categories_title_es ?: 'Categorías'}]]",
+        },
+      };
+    </script>
+
+    <script>
       var primaryColor = document.documentElement.getAttribute("data-primary-color");
       if (primaryColor) {
         document.documentElement.style.setProperty("--color-primary", primaryColor);
@@ -293,7 +425,21 @@
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                   <svg
-                    th:if="${!item.status.href.contains('/categories') && !item.status.href.contains('/tags') && !item.status.href.contains('/archives') && !item.status.href.contains('/posts') && !item.status.href.contains('/moments') && item.status.href != '/' && item.status.href != '' && item.status.displayName != '首页'}"
+                    th:if="${item.status.href.contains('/about')}"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    width="16"
+                    height="16"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <svg
+                    th:if="${!item.status.href.contains('/categories') && !item.status.href.contains('/tags') && !item.status.href.contains('/archives') && !item.status.href.contains('/posts') && !item.status.href.contains('/moments') && !item.status.href.contains('/about') && item.status.href != '/' && item.status.href != '' && item.status.displayName != '首页'}"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -441,7 +587,21 @@
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                   <svg
-                    th:if="${!item.status.href.contains('/categories') && !item.status.href.contains('/tags') && !item.status.href.contains('/archives') && !item.status.href.contains('/posts') && !item.status.href.contains('/moments') && item.status.href != '/' && item.status.href != '' && item.status.displayName != '首页'}"
+                    th:if="${item.status.href.contains('/about')}"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    width="16"
+                    height="16"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <svg
+                    th:if="${!item.status.href.contains('/categories') && !item.status.href.contains('/tags') && !item.status.href.contains('/archives') && !item.status.href.contains('/posts') && !item.status.href.contains('/moments') && !item.status.href.contains('/about') && item.status.href != '/' && item.status.href != '' && item.status.displayName != '首页'}"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

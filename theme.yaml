@@ -13,7 +13,7 @@ spec:
   repo: https://github.com/ziangu/ShaneYu
   settingName: "ShaneYu-setting"
   configMapName: "ShaneYu-configMap"
-  version: 0.6.6
+  version: 0.6.23
   requires: ">=2.20.0"
   issues: https://github.com/ziangu/ShaneYu/issues
   license:
@@ -24,3 +24,9 @@ spec:
     notFound: "error/404.html"
     serverError: "error/500.html"
     error: "error/error.html"
+  customTemplates:
+    page:
+      - name: "关于我"
+        description: "关于我页面模板，展示个人信息、技能、知识体系等"
+        screenshot:
+        file: "about.html"

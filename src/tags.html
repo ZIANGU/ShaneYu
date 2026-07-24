@@ -1,6 +1,8 @@
 <include src="layout.html">
   <template name="head">
-    <title th:text="|思想碎片 - ${site.title}|">思想碎片</title>
+    <title th:text="|${theme.config?.page_alias?.tags_title_zh_cn ?: '思想碎片'} - ${site.title}|">
+      思想碎片
+    </title>
     <link rel="stylesheet" href="./css/tags.css" />
   </template>
 
@@ -29,7 +31,7 @@
           <div class="page-header-stats">
             <div class="stat-item">
               <span class="stat-value" th:text="${#lists.size(tags)}"></span>
-              <span class="stat-label" data-i18n="nav.tags">标签</span>
+              <span class="stat-label" data-i18n="nav.tags">碎片</span>
             </div>
           </div>
         </div>
@@ -74,7 +76,7 @@
             d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
           />
         </svg>
-        <p data-i18n="tags.empty">暂无标签</p>
+        <p data-i18n="tags.empty">暂无碎片</p>
       </div>
     </div>
   </div>

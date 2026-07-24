@@ -1,6 +1,10 @@
 <include src="layout.html">
   <template name="head">
-    <title th:text="|岁月痕迹 - ${site.title}|">岁月痕迹</title>
+    <title
+      th:text="|${theme.config?.page_alias?.archives_title_zh_cn ?: '岁月痕迹'} - ${site.title}|"
+    >
+      岁月痕迹
+    </title>
     <link rel="stylesheet" href="./css/archives.css" />
   </template>
 
@@ -26,12 +30,12 @@
           </div>
           <div class="page-header-content">
             <h1 class="page-title" data-i18n="archives.title">岁月痕迹</h1>
-            <p class="page-desc">循着时光的足迹，重温每一篇文字</p>
+            <p class="page-desc" data-i18n="archives.desc">循着时光的足迹，重温每一篇文字</p>
           </div>
           <div class="page-header-stats">
             <div class="stat-item">
               <span class="stat-value" th:text="${archives.total}"></span>
-              <span class="stat-label" data-i18n="nav.archives">文章</span>
+              <span class="stat-label" data-i18n="nav.archives">痕迹</span>
             </div>
           </div>
         </div>

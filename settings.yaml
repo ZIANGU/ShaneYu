@@ -78,7 +78,12 @@ spec:
           name: author_name
           label: 博主昵称
           value: "顾子鞍"
-          help: 博主昵称，用于侧边栏展示
+          help: 博主昵称，用于侧边栏和关于页面展示
+        - $formkit: text
+          name: tagline
+          label: 个人标语
+          value: "风遇山止 | 船到岸停"
+          help: 显示在昵称下方的标语，用于关于页面
         - $formkit: attachment
           name: author_avatar
           label: 博主头像
@@ -87,7 +92,7 @@ spec:
         - $formkit: textarea
           name: author_bio
           label: 博主简介
-          value: "源于禹州|面向世界"
+          value: "源于禹州，面向世界"
           help: 显示在侧边栏的一句话简介
         - $formkit: repeater
           name: links
@@ -195,3 +200,459 @@ spec:
           value: 4
           min: 1
           max: 30
+
+    - group: page_alias
+      label: 页面别名设置
+      formSchema:
+        - $formkit: text
+          name: tags_title_zh_cn
+          label: 思想碎片 - 中文别名
+          value: "思想碎片"
+          help: 标签页面的中文标题别名
+        - $formkit: text
+          name: tags_title_zh_tw
+          label: 思想碎片 - 繁体别名
+          value: "思想碎片"
+          help: 标签页面的繁体中文标题别名
+        - $formkit: text
+          name: tags_title_en
+          label: 思想碎片 - 英文别名
+          value: "Tags"
+          help: 标签页面的英文标题别名
+        - $formkit: text
+          name: tags_title_es
+          label: 思想碎片 - 西班牙语别名
+          value: "Etiquetas"
+          help: 标签页面的西班牙语标题别名
+        - $formkit: text
+          name: archives_title_zh_cn
+          label: 岁月痕迹 - 中文别名
+          value: "岁月痕迹"
+          help: 归档页面的中文标题别名
+        - $formkit: text
+          name: archives_title_zh_tw
+          label: 岁月痕迹 - 繁体别名
+          value: "歲月痕跡"
+          help: 归档页面的繁体中文标题别名
+        - $formkit: text
+          name: archives_title_en
+          label: 岁月痕迹 - 英文别名
+          value: "Traces of Time"
+          help: 归档页面的英文标题别名
+        - $formkit: text
+          name: archives_title_es
+          label: 岁月痕迹 - 西班牙语别名
+          value: "Huellas del tiempo"
+          help: 归档页面的西班牙语标题别名
+        - $formkit: text
+          name: categories_title_zh_cn
+          label: 文字花园 - 中文别名
+          value: "文字花园"
+          help: 分类页面的中文标题别名
+        - $formkit: text
+          name: categories_title_zh_tw
+          label: 文字花园 - 繁体别名
+          value: "文字花園"
+          help: 分类页面的繁体中文标题别名
+        - $formkit: text
+          name: categories_title_en
+          label: 文字花园 - 英文别名
+          value: "Categories"
+          help: 分类页面的英文标题别名
+        - $formkit: text
+          name: categories_title_es
+          label: 文字花园 - 西班牙语别名
+          value: "Categorías"
+          help: 分类页面的西班牙语标题别名
+        - $formkit: text
+          name: moments_title_zh_cn
+          label: 瞬间 - 中文别名
+          value: "瞬间"
+          help: 瞬间页面的中文标题别名
+        - $formkit: text
+          name: moments_title_zh_tw
+          label: 瞬间 - 繁体别名
+          value: "瞬間"
+          help: 瞬间页面的繁体中文标题别名
+        - $formkit: text
+          name: moments_title_en
+          label: 瞬间 - 英文别名
+          value: "Moments"
+          help: 瞬间页面的英文标题别名
+        - $formkit: text
+          name: moments_title_es
+          label: 瞬间 - 西班牙语别名
+          value: "Momentos"
+          help: 瞬间页面的西班牙语标题别名
+        - $formkit: text
+          name: about_experience_title_zh_cn
+          label: 个人经历 - 中文别名
+          value: "个人经历"
+          help: 关于页面中个人经历的中文标题别名
+        - $formkit: text
+          name: about_experience_title_zh_tw
+          label: 个人经历 - 繁体别名
+          value: "個人經歷"
+          help: 关于页面中个人经历的繁体中文标题别名
+        - $formkit: text
+          name: about_experience_title_en
+          label: 个人经历 - 英文别名
+          value: "Experience"
+          help: 关于页面中个人经历的英文标题别名
+        - $formkit: text
+          name: about_experience_title_es
+          label: 个人经历 - 西班牙语别名
+          value: "Experiencia"
+          help: 关于页面中个人经历的西班牙语标题别名
+
+        # 描述文案
+        - $formkit: text
+          name: tags_desc_zh_cn
+          label: 思想碎片 - 中文描述
+          value: "拾起散落的灵感碎片，拼凑出完整的思考图景"
+          help: 标签页面的中文描述文案
+        - $formkit: text
+          name: tags_desc_en
+          label: 思想碎片 - 英文描述
+          value: "Collect scattered inspiration and piece together a complete picture of thought"
+          help: 标签页面的英文描述文案
+        - $formkit: text
+          name: tags_desc_zh_tw
+          label: 思想碎片 - 繁体描述
+          value: "拾起散落的靈感碎片，拼湊出完整的思考圖景"
+          help: 标签页面的繁体中文描述文案
+        - $formkit: text
+          name: tags_desc_es
+          label: 思想碎片 - 西班牙语描述
+          value: "Recoge fragmentos de inspiración dispersos y construye una imagen completa del pensamiento"
+          help: 标签页面的西班牙语描述文案
+
+        - $formkit: text
+          name: archives_desc_zh_cn
+          label: 岁月痕迹 - 中文描述
+          value: "循着时光的足迹，重温每一篇文字"
+          help: 归档页面的中文描述文案
+        - $formkit: text
+          name: archives_desc_en
+          label: 岁月痕迹 - 英文描述
+          value: "Follow the footsteps of time and revisit every article"
+          help: 归档页面的英文描述文案
+        - $formkit: text
+          name: archives_desc_zh_tw
+          label: 岁月痕迹 - 繁体描述
+          value: "循著時光的足跡，重溫每一篇文字"
+          help: 归档页面的繁体中文描述文案
+        - $formkit: text
+          name: archives_desc_es
+          label: 岁月痕迹 - 西班牙语描述
+          value: "Sigue las huellas del tiempo y revisita cada artículo"
+          help: 归档页面的西班牙语描述文案
+
+        - $formkit: text
+          name: categories_desc_zh_cn
+          label: 文字花园 - 中文描述
+          value: "漫步于主题之间，采撷每一朵思想的花"
+          help: 分类页面的中文描述文案
+        - $formkit: text
+          name: categories_desc_en
+          label: 文字花园 - 英文描述
+          value: "Wander through themes and gather every flower of thought"
+          help: 分类页面的英文描述文案
+        - $formkit: text
+          name: categories_desc_zh_tw
+          label: 文字花园 - 繁体描述
+          value: "漫步於主題之間，採擷每一朵思想的花"
+          help: 分类页面的繁体中文描述文案
+        - $formkit: text
+          name: categories_desc_es
+          label: 文字花园 - 西班牙语描述
+          value: "Recorre los temas y recoge cada flor de pensamiento"
+          help: 分类页面的西班牙语描述文案
+
+        - $formkit: text
+          name: moments_desc_zh_cn
+          label: 瞬间 - 中文描述
+          value: "记录生活中的点滴灵感与碎碎念"
+          help: 瞬间页面的中文描述文案
+        - $formkit: text
+          name: moments_desc_en
+          label: 瞬间 - 英文描述
+          value: "Capturing life's little inspirations and thoughts"
+          help: 瞬间页面的英文描述文案
+        - $formkit: text
+          name: moments_desc_zh_tw
+          label: 瞬间 - 繁体描述
+          value: "記錄生活中的點滴靈感與碎碎念"
+          help: 瞬间页面的繁体中文描述文案
+        - $formkit: text
+          name: moments_desc_es
+          label: 瞬间 - 西班牙语描述
+          value: "Capturando las pequeñas inspiraciones y pensamientos de la vida"
+          help: 瞬间页面的西班牙语描述文案
+
+        # 统计标签
+        - $formkit: text
+          name: tags_label_zh_cn
+          label: 思想碎片 - 中文统计标签
+          value: "碎片"
+          help: 标签页面统计数字后的中文标签
+        - $formkit: text
+          name: tags_label_en
+          label: 思想碎片 - 英文统计标签
+          value: "Tags"
+          help: 标签页面统计数字后的英文标签
+        - $formkit: text
+          name: tags_label_zh_tw
+          label: 思想碎片 - 繁体统计标签
+          value: "碎片"
+          help: 标签页面统计数字后的繁体标签
+        - $formkit: text
+          name: tags_label_es
+          label: 思想碎片 - 西班牙语统计标签
+          value: "Etiquetas"
+          help: 标签页面统计数字后的西班牙语标签
+
+        - $formkit: text
+          name: archives_label_zh_cn
+          label: 岁月痕迹 - 中文统计标签
+          value: "痕迹"
+          help: 归档页面统计数字后的中文标签
+        - $formkit: text
+          name: archives_label_en
+          label: 岁月痕迹 - 英文统计标签
+          value: "Articles"
+          help: 归档页面统计数字后的英文标签
+        - $formkit: text
+          name: archives_label_zh_tw
+          label: 岁月痕迹 - 繁体统计标签
+          value: "痕跡"
+          help: 归档页面统计数字后的繁体标签
+        - $formkit: text
+          name: archives_label_es
+          label: 岁月痕迹 - 西班牙语统计标签
+          value: "Artículos"
+          help: 归档页面统计数字后的西班牙语标签
+
+        - $formkit: text
+          name: categories_label_zh_cn
+          label: 文字花园 - 中文统计标签
+          value: "花园"
+          help: 分类页面统计数字后的中文标签
+        - $formkit: text
+          name: categories_label_en
+          label: 文字花园 - 英文统计标签
+          value: "Categories"
+          help: 分类页面统计数字后的英文标签
+        - $formkit: text
+          name: categories_label_zh_tw
+          label: 文字花园 - 繁体统计标签
+          value: "花園"
+          help: 分类页面统计数字后的繁体标签
+        - $formkit: text
+          name: categories_label_es
+          label: 文字花园 - 西班牙语统计标签
+          value: "Categorías"
+          help: 分类页面统计数字后的西班牙语标签
+
+        - $formkit: text
+          name: moments_label_zh_cn
+          label: 瞬间 - 中文统计标签
+          value: "条瞬间"
+          help: 瞬间页面统计数字后的中文标签
+        - $formkit: text
+          name: moments_label_en
+          label: 瞬间 - 英文统计标签
+          value: "moments"
+          help: 瞬间页面统计数字后的英文标签
+        - $formkit: text
+          name: moments_label_zh_tw
+          label: 瞬间 - 繁体统计标签
+          value: "條瞬間"
+          help: 瞬间页面统计数字后的繁体标签
+        - $formkit: text
+          name: moments_label_es
+          label: 瞬间 - 西班牙语统计标签
+          value: "momentos"
+          help: 瞬间页面统计数字后的西班牙语标签
+
+        # 暂无数据文案
+        - $formkit: text
+          name: tags_empty_zh_cn
+          label: 思想碎片 - 中文暂无数据
+          value: "暂无碎片"
+          help: 标签页面无数据时的中文提示文案
+        - $formkit: text
+          name: tags_empty_en
+          label: 思想碎片 - 英文暂无数据
+          value: "No tags yet"
+          help: 标签页面无数据时的英文提示文案
+        - $formkit: text
+          name: tags_empty_zh_tw
+          label: 思想碎片 - 繁体暂无数据
+          value: "暫無碎片"
+          help: 标签页面无数据时的繁体提示文案
+        - $formkit: text
+          name: tags_empty_es
+          label: 思想碎片 - 西班牙语暂无数据
+          value: "Aún no hay etiquetas"
+          help: 标签页面无数据时的西班牙语提示文案
+
+        - $formkit: text
+          name: archives_empty_zh_cn
+          label: 岁月痕迹 - 中文暂无数据
+          value: "暂无岁月痕迹"
+          help: 归档页面无数据时的中文提示文案
+        - $formkit: text
+          name: archives_empty_en
+          label: 岁月痕迹 - 英文暂无数据
+          value: "No articles"
+          help: 归档页面无数据时的英文提示文案
+        - $formkit: text
+          name: archives_empty_zh_tw
+          label: 岁月痕迹 - 繁体暂无数据
+          value: "暫無歲月痕跡"
+          help: 归档页面无数据时的繁体提示文案
+        - $formkit: text
+          name: archives_empty_es
+          label: 岁月痕迹 - 西班牙语暂无数据
+          value: "No hay artículos"
+          help: 归档页面无数据时的西班牙语提示文案
+
+        - $formkit: text
+          name: categories_empty_zh_cn
+          label: 文字花园 - 中文暂无数据
+          value: "暂无花园"
+          help: 分类页面无数据时的中文提示文案
+        - $formkit: text
+          name: categories_empty_en
+          label: 文字花园 - 英文暂无数据
+          value: "No categories"
+          help: 分类页面无数据时的英文提示文案
+        - $formkit: text
+          name: categories_empty_zh_tw
+          label: 文字花园 - 繁体暂无数据
+          value: "暫無花園"
+          help: 分类页面无数据时的繁体提示文案
+        - $formkit: text
+          name: categories_empty_es
+          label: 文字花园 - 西班牙语暂无数据
+          value: "No hay categorías"
+          help: 分类页面无数据时的西班牙语提示文案
+
+        - $formkit: text
+          name: moments_empty_zh_cn
+          label: 瞬间 - 中文暂无数据
+          value: "暂无瞬间"
+          help: 瞬间页面无数据时的中文提示文案
+        - $formkit: text
+          name: moments_empty_en
+          label: 瞬间 - 英文暂无数据
+          value: "No moments yet"
+          help: 瞬间页面无数据时的英文提示文案
+        - $formkit: text
+          name: moments_empty_zh_tw
+          label: 瞬间 - 繁体暂无数据
+          value: "暫無瞬間"
+          help: 瞬间页面无数据时的繁体提示文案
+        - $formkit: text
+          name: moments_empty_es
+          label: 瞬间 - 西班牙语暂无数据
+          value: "Aún no hay momentos"
+          help: 瞬间页面无数据时的西班牙语提示文案
+
+    - group: about
+      label: 关于页面设置
+      formSchema:
+        - $formkit: text
+          name: profession
+          label: 职业
+          value: "全栈开发者"
+          help: 你的职业或身份，显示在关于页面头部
+        - $formkit: textarea
+          name: personal_intro
+          label: 个人简介
+          value: "一个热爱技术、喜欢折腾的爱好者。记录生活，分享技术，探索未知。"
+          help: 个人详细介绍，支持换行
+        - $formkit: repeater
+          name: skills
+          label: 个人技能
+          help: 添加你的技能，支持关联文章标签
+          value: []
+          children:
+            - $formkit: text
+              name: name
+              label: 技能名称
+              validation: required
+            - $formkit: select
+              name: level
+              label: 掌握程度
+              value: "了解"
+              options:
+                - label: 精通
+                  value: "精通"
+                - label: 熟练
+                  value: "熟练"
+                - label: 了解
+                  value: "了解"
+                - label: 入门
+                  value: "入门"
+            - $formkit: text
+              name: tag_slug
+              label: 关联文章标签别名
+              placeholder: "留空则不关联"
+              help: "填写文章标签的别名（slug），点击技能可跳转到对应标签页面"
+        - $formkit: repeater
+          name: projects
+          label: 我的项目
+          help: 添加你的个人项目
+          value: []
+          children:
+            - $formkit: text
+              name: name
+              label: 项目名称
+              validation: required
+            - $formkit: attachment
+              name: icon
+              label: 项目图标
+              value: ""
+              help: "从附件选取项目图标，建议使用方形图片"
+            - $formkit: text
+              name: url
+              label: 项目链接 *
+              placeholder: "如：https://gitee.com/ziangu/MoveCar"
+              validation: required
+            - $formkit: text
+              name: description
+              label: 项目描述
+              placeholder: "简要描述项目"
+            - $formkit: text
+              name: tech_stack
+              label: 技术栈
+              placeholder: "如：Vue3,TypeScript"
+        - $formkit: repeater
+          name: personal_experience
+          label: 个人经历
+          help: 添加你的个人经历
+          value: []
+          children:
+            - $formkit: date
+              name: start_date
+              label: 开始日期
+              validation: required
+            - $formkit: date
+              name: end_date
+              label: 结束日期
+              help: "留空表示至今"
+            - $formkit: text
+              name: title
+              label: 经历名称
+              validation: required
+            - $formkit: textarea
+              name: description
+              label: 描述
+              help: 该经历的简要说明和收获
+        - $formkit: textarea
+          name: about_site
+          label: 关于本站
+          value: ""
+          help: 关于这个博客网站的介绍

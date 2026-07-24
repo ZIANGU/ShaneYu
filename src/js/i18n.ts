@@ -94,6 +94,17 @@ const translations = {
     "moments.desc": "记录生活中的点滴灵感与碎碎念",
     "moments.count": "条瞬间",
     "moments.empty": "暂无瞬间",
+    "about.intro": "个人简介",
+    "about.contact": "联系方式",
+    "about.site": "关于本站",
+    "about.skills": "个人技能",
+    "about.projects": "我的项目",
+    "about.experience": "个人经历",
+    "about.now": "~ 至今",
+    "about.skill_level.精通": "精通",
+    "about.skill_level.熟练": "熟练",
+    "about.skill_level.了解": "了解",
+    "about.skill_level.入门": "入门",
   },
   "zh-TW": {
     "nav.home": "首頁",
@@ -189,6 +200,17 @@ const translations = {
     "moments.desc": "記錄生活中的點滴靈感與碎碎念",
     "moments.count": "條瞬間",
     "moments.empty": "暫無瞬間",
+    "about.intro": "個人簡介",
+    "about.contact": "聯繫方式",
+    "about.site": "關於本站",
+    "about.skills": "個人技能",
+    "about.projects": "我的專案",
+    "about.experience": "個人經歷",
+    "about.now": "~ 至今",
+    "about.skill_level.精通": "精通",
+    "about.skill_level.熟练": "熟練",
+    "about.skill_level.了解": "了解",
+    "about.skill_level.入门": "入門",
   },
   en: {
     "nav.home": "Home",
@@ -284,6 +306,17 @@ const translations = {
     "moments.desc": "Capturing life's little inspirations and thoughts",
     "moments.count": "moments",
     "moments.empty": "No moments yet",
+    "about.intro": "About Me",
+    "about.contact": "Contact",
+    "about.site": "About Site",
+    "about.skills": "Skills",
+    "about.projects": "Projects",
+    "about.experience": "Experience",
+    "about.now": "~ Present",
+    "about.skill_level.精通": "Master",
+    "about.skill_level.熟练": "Proficient",
+    "about.skill_level.了解": "Familiar",
+    "about.skill_level.入门": "Beginner",
   },
   es: {
     "nav.home": "Inicio",
@@ -380,6 +413,17 @@ const translations = {
     "moments.desc": "Capturando las pequeñas inspiraciones y pensamientos de la vida",
     "moments.count": "momentos",
     "moments.empty": "Aún no hay momentos",
+    "about.intro": "Sobre Mí",
+    "about.contact": "Contacto",
+    "about.site": "Sobre el Sitio",
+    "about.skills": "Habilidades",
+    "about.projects": "Proyectos",
+    "about.experience": "Experiencia",
+    "about.now": "~ Presente",
+    "about.skill_level.精通": "Maestro",
+    "about.skill_level.熟练": "Avanzado",
+    "about.skill_level.了解": "Familiarizado",
+    "about.skill_level.入门": "Principiante",
   },
 };
 
@@ -407,9 +451,91 @@ function getCurrentLang() {
   return document.documentElement.lang || "zh-CN";
 }
 
+// 获取别名翻译
+function getAliasTranslation(key: string, lang: string): string | null {
+  // 检查是否有别名配置
+  if (typeof window !== "undefined" && (window as any).pageAliases) {
+    const aliases = (window as any).pageAliases;
+    // 标题
+    if (key === "tags.title") {
+      return aliases.tags_title?.[lang] || null;
+    }
+    if (key === "archives.title") {
+      return aliases.archives_title?.[lang] || null;
+    }
+    if (key === "categories.title") {
+      return aliases.categories_title?.[lang] || null;
+    }
+    if (key === "moments.title") {
+      return aliases.moments_title?.[lang] || null;
+    }
+    if (key === "about.experience") {
+      return aliases.about_experience_title?.[lang] || null;
+    }
+    // 描述
+    if (key === "tags.desc") {
+      return aliases.tags_desc?.[lang] || null;
+    }
+    if (key === "archives.desc") {
+      return aliases.archives_desc?.[lang] || null;
+    }
+    if (key === "categories.desc") {
+      return aliases.categories_desc?.[lang] || null;
+    }
+    if (key === "moments.desc") {
+      return aliases.moments_desc?.[lang] || null;
+    }
+    // 统计标签
+    if (key === "nav.tags") {
+      return aliases.tags_label?.[lang] || null;
+    }
+    if (key === "nav.archives") {
+      return aliases.archives_label?.[lang] || null;
+    }
+    if (key === "nav.categories") {
+      return aliases.categories_label?.[lang] || null;
+    }
+    if (key === "moments.count") {
+      return aliases.moments_label?.[lang] || null;
+    }
+    // 暂无数据
+    if (key === "tags.empty") {
+      return aliases.tags_empty?.[lang] || null;
+    }
+    if (key === "archives.empty") {
+      return aliases.archives_empty?.[lang] || null;
+    }
+    if (key === "categories.empty") {
+      return aliases.categories_empty?.[lang] || null;
+    }
+    if (key === "moments.empty") {
+      return aliases.moments_empty?.[lang] || null;
+    }
+    // 侧边栏标题
+    if (key === "sidebar.tag_cloud") {
+      return aliases.sidebar_tag_cloud?.[lang] || null;
+    }
+    if (key === "sidebar.categories") {
+      return aliases.sidebar_categories?.[lang] || null;
+    }
+  }
+  return null;
+}
+
 // 翻译函数
 function t(key: string, ...args: (string | number)[]): string {
   const lang = getCurrentLang();
+
+  // 优先检查别名配置
+  const aliasText = getAliasTranslation(key, lang);
+  if (aliasText) {
+    let text = aliasText;
+    args.forEach((arg, index) => {
+      text = text.replace(new RegExp(`\\{${index}\\}`, "g"), String(arg));
+    });
+    return text;
+  }
+
   const langTranslations = translations[lang as keyof typeof translations] || translations["zh-CN"];
   let text = langTranslations[key as keyof typeof langTranslations] || key;
 

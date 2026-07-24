@@ -1,0 +1,264 @@
+<include src="partials/layout.html">
+  <template name="head">
+    <title th:text="|${singlePage.spec.title} - ${site.title}|">关于我</title>
+    <link rel="stylesheet" href="./css/page.css" />
+    <link rel="stylesheet" href="./css/about.css" />
+    <script type="module" src="./js/about.ts"></script>
+  </template>
+
+  <div class="layout-grid sidebar-left">
+    <include src="partials/sidebar.html"></include>
+    <div class="content-area">
+      <div class="about-page">
+        <!-- 头部信息 -->
+        <div class="about-header">
+          <div class="about-info-left">
+            <div class="about-avatar">
+              <img
+                th:src="${theme.config?.social?.author_avatar != null and !#strings.isEmpty(theme.config?.social?.author_avatar) ? theme.config?.social?.author_avatar : '/themes/theme-ShaneYu/assets/images/avatar.png'}"
+                alt="avatar"
+              />
+            </div>
+            <div class="about-info">
+              <h1
+                class="about-name"
+                th:text="${theme.config?.social?.author_name ?: site.title}"
+              ></h1>
+              <p
+                class="about-tagline"
+                th:text="${theme.config?.social?.tagline ?: '源于禹州，面向世界'}"
+              ></p>
+              <p
+                class="about-profession"
+                th:text="${theme.config?.about?.profession ?: '全栈开发者'}"
+              ></p>
+            </div>
+          </div>
+          <div class="about-info-right">
+            <div
+              th:if="${theme.config?.about?.personal_intro != null and !#strings.isEmpty(theme.config?.about?.personal_intro)}"
+              class="about-intro-section"
+            >
+              <h2 class="section-title" data-i18n="about.intro">个人简介</h2>
+              <div class="personal-intro" th:utext="${theme.config?.about?.personal_intro}"></div>
+            </div>
+            <div
+              th:if="${theme.config?.social?.links != null and !#lists.isEmpty(theme.config?.social?.links)}"
+              class="about-contact-section"
+            >
+              <h2 class="section-title" data-i18n="about.contact">联系方式</h2>
+              <div class="contact-links">
+                <a
+                  th:each="link : ${theme.config?.social?.links}"
+                  th:if="${link.url != null and !#strings.isEmpty(link.url)}"
+                  th:href="${link.icon == 'email' ? 'mailto:' + link.url : link.url}"
+                  th:target="${link.icon != 'email' ? '_blank' : ''}"
+                  class="contact-link"
+                  th:aria-label="${link.name}"
+                >
+                  <iconify-icon
+                    th:if="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:icon="${link.iconifyIcon}"
+                    class="contact-link-icon"
+                  ></iconify-icon>
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'github'}"
+                    src="./assets/icons/github.svg"
+                    alt="GitHub"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'gitee'}"
+                    src="./assets/icons/gitee.svg"
+                    alt="Gitee"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'email'}"
+                    src="./assets/icons/email.svg"
+                    alt="Email"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'weibo'}"
+                    src="./assets/icons/webo.svg"
+                    alt="Weibo"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'qq'}"
+                    src="./assets/icons/qq.svg"
+                    alt="QQ"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'csdn'}"
+                    src="./assets/icons/csdn.svg"
+                    alt="CSDN"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'youtube'}"
+                    src="./assets/icons/youtube.svg"
+                    alt="YouTube"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'wechat'}"
+                    src="./assets/icons/wechat.svg"
+                    alt="Wechat"
+                    class="contact-link-icon"
+                  />
+                  <img
+                    th:unless="${link.iconifyIcon != null and !#strings.isEmpty(link.iconifyIcon)}"
+                    th:if="${link.icon == 'zhihu'}"
+                    src="./assets/icons/zhihu.svg"
+                    alt="Zhihu"
+                    class="contact-link-icon"
+                  />
+                  <span class="contact-link-name" th:text="${link.name}"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 关于本站 -->
+        <div
+          class="about-section"
+          th:if="${theme.config?.about?.about_site != null and !#strings.isEmpty(theme.config?.about?.about_site)}"
+        >
+          <h2 class="section-title" data-i18n="about.site">关于本站</h2>
+          <div class="about-site" th:utext="${theme.config?.about?.about_site}"></div>
+        </div>
+
+        <!-- 个人技能 -->
+        <div
+          class="about-section"
+          th:if="${theme.config?.about?.skills != null and !#lists.isEmpty(theme.config?.about?.skills)}"
+        >
+          <h2 class="section-title" data-i18n="about.skills">个人技能</h2>
+          <div class="skills-container">
+            <a
+              th:each="skill : ${theme.config?.about?.skills}"
+              th:if="${skill.tag_slug != null and !#strings.isEmpty(skill.tag_slug)}"
+              th:href="|/tags/${skill.tag_slug}|"
+              class="skill-item"
+            >
+              <span class="skill-name" th:text="${skill.name}"></span>
+              <span
+                class="skill-level"
+                th:classappend="|skill-level-${skill.level ?: '了解'}|"
+                th:data-i18n="|about.skill_level.${skill.level ?: '了解'}|"
+                th:text="${skill.level ?: '了解'}"
+              ></span>
+            </a>
+            <div
+              th:each="skill : ${theme.config?.about?.skills}"
+              th:if="${skill.tag_slug == null or #strings.isEmpty(skill.tag_slug)}"
+              class="skill-item"
+            >
+              <span class="skill-name" th:text="${skill.name}"></span>
+              <span
+                class="skill-level"
+                th:classappend="|skill-level-${skill.level ?: '了解'}|"
+                th:data-i18n="|about.skill_level.${skill.level ?: '了解'}|"
+                th:text="${skill.level ?: '了解'}"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 我的项目 -->
+        <div
+          class="about-section"
+          th:if="${theme.config?.about?.projects != null and !#lists.isEmpty(theme.config?.about?.projects)}"
+        >
+          <h2 class="section-title" data-i18n="about.projects">我的项目</h2>
+          <div class="projects-container">
+            <a
+              th:each="project : ${theme.config?.about?.projects}"
+              th:href="${project.url}"
+              target="_blank"
+              class="project-item"
+            >
+              <div class="project-thumb">
+                <img
+                  th:if="${project.icon != null and !#strings.isEmpty(project.icon)}"
+                  th:src="${project.icon}"
+                  th:alt="${project.name}"
+                  class="project-icon"
+                />
+                <img
+                  th:unless="${project.icon != null and !#strings.isEmpty(project.icon)}"
+                  src="/themes/theme-ShaneYu/assets/icons/project.svg"
+                  th:alt="${project.name}"
+                  class="project-icon"
+                />
+              </div>
+              <div class="project-content">
+                <span class="project-name" th:text="${project.name}"></span>
+                <p class="project-desc" th:text="${project.description}"></p>
+                <span
+                  class="project-tech"
+                  th:if="${project.tech_stack != null and !#strings.isEmpty(project.tech_stack)}"
+                  th:text="${project.tech_stack}"
+                ></span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- 个人经历 -->
+        <div
+          class="about-section"
+          th:if="${theme.config?.about?.personal_experience != null and !#lists.isEmpty(theme.config?.about?.personal_experience)}"
+        >
+          <h2 class="section-title" data-i18n="about.experience">个人经历</h2>
+          <div class="timeline">
+            <div th:each="exp : ${theme.config?.about?.personal_experience}" class="timeline-item">
+              <div class="timeline-content">
+                <div class="timeline-date">
+                  <span th:text="${exp.start_date}"></span>
+                  <span
+                    th:if="${exp.end_date != null and !#strings.isEmpty(exp.end_date)}"
+                    class="timeline-date-separator"
+                    >~</span
+                  >
+                  <span
+                    th:if="${exp.end_date != null and !#strings.isEmpty(exp.end_date)}"
+                    th:text="${exp.end_date}"
+                  ></span>
+                  <span
+                    th:if="${exp.end_date == null or #strings.isEmpty(exp.end_date)}"
+                    class="timeline-date-current"
+                    data-i18n="about.now"
+                    >~ 至今</span
+                  >
+                </div>
+                <h3 class="timeline-title" th:text="${exp.title}"></h3>
+                <p class="timeline-desc" th:text="${exp.description}"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${haloCommentEnabled}" style="margin-top: 24px">
+        <halo:comment
+          group="content.halo.run"
+          kind="SinglePage"
+          th:attr="name=${singlePage.metadata.name}"
+        />
+      </div>
+    </div>
+  </div>
+</include>

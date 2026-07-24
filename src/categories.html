@@ -1,6 +1,10 @@
 <include src="partials/layout.html">
   <template name="head">
-    <title th:text="|文字花园 - ${site.title}|">文字花园</title>
+    <title
+      th:text="|${theme.config?.page_alias?.categories_title_zh_cn ?: '文字花园'} - ${site.title}|"
+    >
+      文字花园
+    </title>
     <link rel="stylesheet" href="./css/category.css" />
   </template>
 
@@ -29,7 +33,7 @@
           <div class="page-header-stats">
             <div class="stat-item">
               <span class="stat-value" th:text="${#lists.size(categories)}"></span>
-              <span class="stat-label" data-i18n="nav.categories">分类</span>
+              <span class="stat-label" data-i18n="nav.categories">花园</span>
             </div>
           </div>
         </div>
@@ -65,7 +69,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
         </svg>
-        <p data-i18n="categories.empty">暂无分类</p>
+        <p data-i18n="categories.empty">暂无花园</p>
       </div>
     </div>
   </div>
